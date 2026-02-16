@@ -1,0 +1,25 @@
+{
+  "name": "design-quality-marketplace",
+  "owner": {
+    "name": "Sean Smith",
+    "url": "https://github.com/SeanSmithDesign"
+  },
+  "metadata": {
+    "description": "Design quality tools for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "design-quality",
+      "description": "Enforce project-specific aesthetic standards across the AI design workflow. Includes 3 commands, 1 skill, and 3 aesthetic presets.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Sean Smith",
+        "url": "https://github.com/SeanSmithDesign"
+      },
+      "homepage": "https://github.com/SeanSmithDesign/design-quality-plugin",
+      "tags": ["design-quality", "aesthetic", "ui-review", "design-system", "taste", "frontend-design", "style-guide"],
+      "source": "."
+    }
+  ]
+}
