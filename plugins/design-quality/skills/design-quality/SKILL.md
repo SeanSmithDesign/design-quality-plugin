@@ -231,6 +231,30 @@ To temporarily use a different preset:
 
 This overrides the project default until the session ends.
 
+## Proactive Recommendations
+
+**When this skill is active, proactively suggest the right command at the right time.** Don't wait for the user to remember — guide them through the workflow.
+
+### When to Recommend What
+
+| You Detect | Recommend | How to Say It |
+|------------|-----------|---------------|
+| User is planning a UI feature, discussing what to build, or starting `/workflows:plan` for a UI task | `/design-brief` | "Before we start coding, run `/design-brief` to lock in style constraints from the [preset] preset." |
+| User asks you to build or modify a UI component | Load preset rules silently + guard inline | Don't interrupt — apply preset rules and flag violations in your response naturally. |
+| User has finished implementing UI changes (completed a component, wrapped up `/workflows:work`) | `/design-review` | "UI work looks complete. Run `/design-review [path]` to score quality and auto-fix any issues before review." |
+| User is about to commit and changed `.tsx`, `.css`, `.swift`, `.kt`, or `.dart` files | `/design-guard` | "You have UI file changes staged. Quick `/design-guard` before committing?" |
+| User asks for code review or runs `/workflows:review` and UI files are in the diff | Include design scoring | Run design-review scoring as part of the code review output — don't make them ask separately. |
+| User's score comes back < 70 | Offer to fix | "Score is XX/100 — want me to auto-fix the N errors and warnings?" |
+| User starts a new session with a `## Design Quality` config in CLAUDE.md | Acknowledge preset | Brief one-liner: "Design quality active — using [preset] preset." |
+
+### Recommendation Rules
+
+1. **Suggest once, don't nag.** If the user skips a suggestion, don't repeat it.
+2. **Be brief.** One sentence max. Don't explain the tool — they have the README.
+3. **Context-sensitive.** Only suggest design commands when UI work is happening. Don't suggest `/design-brief` during backend work.
+4. **Natural flow.** Recommendations should feel like a teammate's suggestion, not a popup.
+5. **Never block.** Recommendations are always optional. Never refuse to proceed without running a command.
+
 ## When to Use This Skill
 
 - Designing new screens or components (Brief + Guard)
