@@ -1,0 +1,22 @@
+{
+  "name": "design-quality",
+  "version": "1.0.0",
+  "description": "Enforce project-specific aesthetic standards across the AI design workflow. Includes 3 commands, 1 skill, and 3 aesthetic presets.",
+  "author": {
+    "name": "Sean Smith",
+    "url": "https://github.com/DT-Funding-Solutions"
+  },
+  "homepage": "https://github.com/DT-Funding-Solutions/design-quality-plugin",
+  "repository": "https://github.com/DT-Funding-Solutions/design-quality-plugin",
+  "license": "MIT",
+  "keywords": [
+    "design-quality",
+    "aesthetic",
+    "ui-review",
+    "design-system",
+    "taste",
+    "compound-engineering",
+    "frontend-design",
+    "style-guide"
+  ]
+}

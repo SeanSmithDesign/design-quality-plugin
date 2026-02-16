@@ -19,7 +19,7 @@
       },
       "homepage": "https://github.com/SeanSmithDesign/design-quality-plugin",
       "tags": ["design-quality", "aesthetic", "ui-review", "design-system", "taste", "frontend-design", "style-guide"],
-      "source": "."
+      "source": "./plugins/design-quality"
     }
   ]
 }
