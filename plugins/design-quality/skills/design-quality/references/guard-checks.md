@@ -1,19 +1,24 @@
 # Guard Checks
 
-Quick-reference checklist for Guard mode. Before writing any `.tsx` or `.css` file, self-check against these rules. Ordered by detection ease (static/obvious first, judgment calls last).
+Quick-reference checklist for Guard mode. Before writing any UI code, self-check against these rules. Ordered by detection ease (static/obvious first, judgment calls last).
+
+**Platform key:** Examples show Web (React/Tailwind) by default. Apply equivalent checks for Swift (`Color()` literals, `.font()` modifiers), Compose (`Color(0xFF...)`, `MaterialTheme`), and Flutter (`Color()`, `ThemeData`).
 
 ---
 
 ## Static Checks (Can be verified by reading the code)
 
-### 1. No Hardcoded Hex Colors
+### 1. No Hardcoded Colors
 **Severity:** Error
-**Look for:** `className="...text-[#...]..."` or `style={{ color: '#...' }}`
-**Fix:** Replace with semantic token: `text-foreground`, `text-primary`, `bg-background`, etc.
-```tsx
-// Bad:  text-[#B87333]
-// Good: text-primary
-```
+**Look for:** Hardcoded color values in any platform
+**Fix:** Replace with project semantic tokens
+
+| Platform | Bad | Good |
+|----------|-----|------|
+| Web | `text-[#B87333]` | `text-primary` |
+| SwiftUI | `Color(red: 0.72, green: 0.45)` | `Color("primary")` |
+| Compose | `Color(0xFFB87333)` | `MaterialTheme.colorScheme.primary` |
+| Flutter | `Color(0xFFB87333)` | `Theme.of(context).colorScheme.primary` |
 
 ### 2. No Tailwind Palette Colors
 **Severity:** Error

@@ -6,8 +6,8 @@ metadata:
   version: 1.0.0
   category: design
   domain: design-quality
-  platforms: Web
-  techStack: React, Tailwind CSS, Next.js
+  platforms: Web, iOS, macOS, Android, Cross-platform
+  techStack: React, Tailwind CSS, Next.js, SwiftUI, UIKit, AppKit, Jetpack Compose, Flutter
 keywords:
   - design quality
   - aesthetic
@@ -97,18 +97,30 @@ Based on the active preset, generate constraints for:
 
 ## Guard Mode
 
-Before writing any component code (`.tsx`, `.css`, `.module.css`), self-check against these rules from the active preset. This is advisory — flag issues in your response before writing code.
+Before writing any UI code, self-check against these rules from the active preset. This is advisory — flag issues in your response before writing code.
+
+### Platform Detection
+
+Detect the project's platform from the tech stack and apply platform-appropriate checks:
+
+| Platform | File Types | Token System |
+|----------|-----------|--------------|
+| **Web** (React, Next.js) | `.tsx`, `.css`, `.module.css` | Tailwind/CSS variables |
+| **iOS/macOS** (SwiftUI) | `.swift` | Asset catalogs, `Color()` |
+| **iOS/macOS** (UIKit/AppKit) | `.swift`, `.xib`, `.storyboard` | Asset catalogs, `UIColor`/`NSColor` |
+| **Android** (Compose) | `.kt` | Material Theme tokens |
+| **Flutter** | `.dart` | ThemeData tokens |
 
 ### Check List
 
-Read `references/guard-checks.md` for the full list. Core checks:
+Read `references/guard-checks.md` for the full list. Core checks (platform-adapted):
 
-1. **Semantic tokens** — No hardcoded hex colors or Tailwind palette colors (e.g., `bg-blue-500`). Use semantic tokens: `bg-background`, `text-foreground`, `bg-primary`.
-2. **Font families** — Only fonts specified in preset. No unauthorized font imports.
-3. **Spacing grid** — Padding and margins align to the preset's grid system (typically 8px base).
-4. **Elevation** — Shadow usage matches preset hierarchy. No mixing borders and shadows for the same purpose.
-5. **Dark mode** — No `bg-white`, `text-black`, or other hardcoded light/dark values. Use CSS variables.
-6. **Touch targets** — Interactive elements >= 44px minimum dimension.
+1. **Semantic tokens** — No hardcoded colors. Web: no `bg-blue-500` or hex values. Swift: no `UIColor(red:...)` or `.blue` literals. Compose: no `Color(0xFF...)`. Use project tokens.
+2. **Font families** — Only fonts specified in preset. No unauthorized font imports or system font overrides.
+3. **Spacing grid** — Padding and margins align to the preset's grid system (typically 8pt base).
+4. **Elevation** — Shadow/depth usage matches preset hierarchy. Web: box-shadow. Swift: `.shadow()`. Compose: `elevation`.
+5. **Dark mode** — No hardcoded light/dark values. Web: CSS variables. Swift: asset catalog colors with light/dark variants. Compose: MaterialTheme colors.
+6. **Touch targets** — Interactive elements >= 44pt minimum dimension (all platforms).
 
 ### Severity Levels
 
@@ -186,7 +198,7 @@ Score UI quality across 6 categories. Read `references/review-rubric.md` for det
 |----------------|---------------------|
 | `/workflows:brainstorm` | Suggest aesthetic direction based on project type and preset |
 | `/workflows:plan` | Auto-generate style brief section for UI tasks |
-| `/workflows:work` | Guard mode active — self-check before writing `.tsx`/`.css` |
+| `/workflows:work` | Guard mode active — self-check before writing UI code |
 | `/workflows:review` | Run design quality review when UI files in diff |
 | `design-iterator` agent | Use after review flags issues — iterative screenshot-based refinement |
 | `RAMS` | Complementary: RAMS focuses on accessibility, this skill covers holistic aesthetics |

@@ -1,6 +1,6 @@
 ---
 name: design-review
-description: "Score UI quality against the active design preset. Produces a 0-100 score across 6 categories with actionable fixes."
+description: "Guard + score + fix UI quality against the active design preset. Catches violations, scores 6 categories, and offers to auto-fix."
 argument-hint: "[file path, component name, or 'all' for full project]"
 ---
 
@@ -31,16 +31,39 @@ Run a design quality review on UI components.
 
 For each file in scope:
 
-1. Read the file completely
-2. Score against the 6 categories from the review rubric:
-   - **Hierarchy** — Visual weight, semantic HTML, heading order
-   - **Typography** — Font compliance, weight consistency, tracking
-   - **Color** — Semantic tokens, contrast ratios, dark mode
-   - **Spacing** — Grid adherence, consistent padding, touch targets
-   - **Accessibility** — ARIA labels, focus indicators, reduced-motion
-   - **Polish** — Elevation, hover states, transitions, loading/error states
+### Phase 1: Guard (catch violations)
 
-3. Produce the scored report in the format defined in the skill's Review Mode section
+Run through the guard checklist from `references/guard-checks.md`:
+
+- **Errors** — Hardcoded colors, wrong fonts, missing accessible names
+- **Warnings** — Off-grid spacing, missing transitions, inconsistent elevation
+- **Suggestions** — Missing hover states, empty/loading states, semantic HTML
+
+### Phase 2: Score (rate quality)
+
+Score against the 6 categories from the review rubric:
+
+- **Hierarchy** — Visual weight, semantic HTML, heading order
+- **Typography** — Font compliance, weight consistency, tracking
+- **Color** — Semantic tokens, contrast ratios, dark mode
+- **Spacing** — Grid adherence, consistent padding, touch targets
+- **Accessibility** — ARIA labels, focus indicators, reduced-motion
+- **Polish** — Elevation, hover states, transitions, loading/error states
+
+### Phase 3: Fix (apply corrections)
+
+After presenting the report, offer to auto-fix issues:
+
+1. **Auto-fix errors** — Replace hardcoded colors with tokens, fix font families, add missing ARIA labels
+2. **Auto-fix warnings** — Align spacing to grid, add transitions, fix elevation order
+3. **Skip suggestions** — These require judgment; flag them but don't auto-apply
+
+Use **AskUserQuestion** to confirm before applying fixes:
+- "Fix all errors and warnings (N issues)?"
+- "Fix errors only (N issues)?"
+- "Don't fix — I'll handle it"
+
+After fixing, re-score and show the before/after comparison.
 
 ## Output
 
@@ -61,6 +84,9 @@ For each file in scope:
 - **Error** `file:line` — Issue → Fix
 - **Warning** `file:line` — Issue → Fix
 - **Suggestion** `file:line` — Opportunity → Improvement
+
+### Auto-Fixable (N of M issues)
+Errors and warnings that can be automatically corrected.
 ```
 
-After the review, ask if the user wants to fix any issues or run the `design-iterator` agent for iterative visual refinement.
+After presenting the report, offer to fix issues. After fixing, re-run the score and show improvement.

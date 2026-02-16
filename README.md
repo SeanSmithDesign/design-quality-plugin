@@ -1,11 +1,11 @@
 # Design Quality Plugin
 
-A Claude Code plugin that enforces project-specific aesthetic standards across the AI design workflow. Capture your taste once, apply it everywhere.
+A Claude Code plugin that enforces project-specific aesthetic standards across the AI design workflow. Works with Web, iOS, macOS, Android, and cross-platform projects. Capture your taste once, apply it everywhere.
 
 ## Install
 
 ```bash
-claude plugin add https://github.com/DT-Funding-Solutions/design-quality-plugin
+claude plugin add https://github.com/SeanSmithDesign/design-quality-plugin
 ```
 
 ## What's Included
@@ -15,8 +15,8 @@ claude plugin add https://github.com/DT-Funding-Solutions/design-quality-plugin
 | Command | Description |
 |---------|-------------|
 | `/design-brief` | Generate a style brief from the active preset before coding |
-| `/design-guard` | Run guard checks on files to catch violations before committing |
-| `/design-review` | Score UI quality (0-100) across 6 categories with actionable fixes |
+| `/design-guard` | Quick guard check on files — flags violations before committing |
+| `/design-review` | Full pipeline: guard + score + fix. Catches violations, rates 6 categories (0-100), and offers to auto-fix |
 
 ### Skill (1)
 
@@ -28,9 +28,20 @@ claude plugin add https://github.com/DT-Funding-Solutions/design-quality-plugin
 
 | Preset | Aesthetic | Best For |
 |--------|-----------|----------|
-| `linear-mercury` | Clean, functional, minimal | SaaS dashboards, dev tools |
-| `stripe-vercel` | Premium, polished, depth | Marketing sites, fintech |
-| `apple-notion` | Refined simplicity | Consumer apps, content tools |
+| `linear-mercury` | Clean, functional, minimal | SaaS dashboards, dev tools, productivity apps |
+| `stripe-vercel` | Premium, polished, depth | Marketing sites, fintech, developer platforms |
+| `apple-notion` | Refined simplicity | Consumer apps, content tools, native Mac/iOS apps |
+
+## Supported Platforms
+
+| Platform | Tech | What's Checked |
+|----------|------|---------------|
+| **Web** | React, Next.js, Tailwind, CSS | Semantic tokens, CSS variables, Tailwind classes |
+| **iOS/macOS** | SwiftUI, UIKit, AppKit | Asset catalog colors, `.font()` modifiers, spacing |
+| **Android** | Jetpack Compose | MaterialTheme tokens, `dp` spacing, elevation |
+| **Cross-platform** | Flutter | ThemeData tokens, `EdgeInsets`, widget styling |
+
+Presets define aesthetic principles (typography, color, spacing, elevation, motion) — the guard and review adapt checks to your project's platform automatically.
 
 ## Setup
 
@@ -67,13 +78,16 @@ Outputs typography, color, spacing, elevation, and motion constraints from your 
 
 Flags errors (hardcoded colors, wrong fonts), warnings (off-grid spacing), and suggestions (missing hover states).
 
-### After coding: Quality review
+### After coding: Review, score, and fix
 
 ```
 /design-review src/components/
 ```
 
-Scores UI across 6 categories:
+Runs the full pipeline — guard checks, quality scoring, and auto-fix:
+
+1. **Guard** — Catches violations (hardcoded colors, wrong fonts, off-grid spacing)
+2. **Score** — Rates quality across 6 categories:
 
 | Category | What's Checked |
 |----------|---------------|
@@ -83,6 +97,10 @@ Scores UI across 6 categories:
 | Spacing | Grid adherence, touch targets |
 | Accessibility | ARIA labels, focus indicators |
 | Polish | Elevation, hover states, transitions |
+
+3. **Fix** — Offers to auto-fix errors and warnings, then re-scores to show improvement
+
+> `/design-guard` is available as a lightweight alternative when you just want a quick check without scoring.
 
 ### Custom presets
 
@@ -96,13 +114,33 @@ This plugin doesn't replace taste — it captures and enforces taste decisions s
 
 ## Workflow Integration
 
-Designed to complement the [Compound Engineering Plugin](https://github.com/EveryInc/compound-engineering-plugin):
+Designed to complement the [Compound Engineering Plugin](https://github.com/EveryInc/compound-engineering-plugin).
 
-| Workflow Stage | Design Quality Role |
-|----------------|---------------------|
-| `/workflows:plan` | Brief mode generates style constraints |
-| `/workflows:work` | Guard mode self-checks during coding |
-| `/workflows:review` | Review mode scores UI quality |
+### Full Pipeline
+
+```
+/workflows:brainstorm     ← explore what to build
+       ↓
+/workflows:plan           ← plan implementation
+       ↓
+/design-brief             ← style constraints before coding
+       ↓
+/workflows:work           ← implement (skill auto-activates for inline guidance)
+       ↓
+/design-review            ← guard + score + fix
+       ↓
+/workflows:review         ← code review (design is already polished)
+       ↓
+/workflows:compound       ← document learnings
+```
+
+### Minimal Pipeline
+
+For smaller tasks, the essentials:
+
+```
+/design-brief → code → /design-review
+```
 
 ## License
 
