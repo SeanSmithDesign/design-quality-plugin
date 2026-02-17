@@ -10,12 +10,11 @@ claude plugin add https://github.com/SeanSmithDesign/design-quality-plugin
 
 ## What's Included
 
-### Commands (3)
+### Commands (2)
 
 | Command | Description |
 |---------|-------------|
 | `/design-brief` | Generate a style brief from the active preset before coding |
-| `/design-guard` | Quick guard check on files — flags violations before committing |
 | `/design-review` | Full pipeline: guard + score + fix. Catches violations, rates 6 categories (0-100), and offers to auto-fix |
 
 ### Skill (1)
@@ -82,7 +81,6 @@ When the design-quality skill is active, Claude proactively recommends the right
 | You start planning a UI feature | "Run `/design-brief` to set style constraints before coding" | Prevents design drift |
 | You ask Claude to build/modify a component | Brief reminder of active preset rules inline | Keeps code on-brand |
 | You finish implementing UI changes | "Run `/design-review` to score quality and auto-fix issues" | Catches violations before PR |
-| You're about to commit UI files | "Consider `/design-guard` for a quick check" | Last line of defense |
 | You ask for a code review on UI | Includes design quality scoring in the review | Holistic feedback |
 
 You don't need to memorize the workflow — Claude will suggest the next step.
@@ -98,19 +96,6 @@ Outputs typography, color, spacing, elevation, motion, and component pattern con
 Override the project preset for one brief:
 ```
 /design-brief stripe-vercel
-```
-
-### During coding: Guard checks
-
-```
-/design-guard src/components/Hero.tsx
-```
-
-Flags errors (hardcoded colors, wrong fonts), warnings (off-grid spacing), and suggestions (missing hover states).
-
-Without arguments, checks all staged files:
-```
-/design-guard
 ```
 
 ### After coding: Review, score, and fix
@@ -143,8 +128,6 @@ Review a single file, a directory, or the whole project:
 /design-review src/components/
 /design-review all
 ```
-
-> `/design-guard` is available as a lightweight alternative when you just want a quick check without scoring.
 
 ## Preset Details
 
