@@ -1,12 +1,14 @@
-# Preset: Apple / Notion
+# Preset: Refined Minimal
 
 ## Contents
 - [Philosophy](#philosophy)
 - [Typography](#typography)
 - [Color](#color)
 - [Spacing](#spacing)
+- [Layout](#layout)
 - [Elevation](#elevation)
 - [Motion](#motion)
+- [Content](#content)
 - [Component Patterns](#component-patterns)
 - [Do / Don't Examples](#do--dont-examples)
 
@@ -16,11 +18,13 @@ Refined simplicity. The interface feels inevitable — as if no other design was
 
 ## Reference Apps
 
+Study these for this aesthetic — the preset is named for the style, not the brands:
+
 - **Apple** — System-level typography, whitespace as luxury, product showcase composition
 - **Notion** — Friendly minimalism, content-first layout, subtle interactive states
 - **Things** — Perfect task hierarchy, weight-based visual organization, calming palette
 
-Study: How these apps make complex information feel simple. How whitespace creates premium perception. How a single weight change (regular → medium) creates clear hierarchy without size change.
+Study: How these apps make complex information feel simple. How whitespace creates premium perception. How a single weight change (regular to medium) creates clear hierarchy without size change.
 
 ## Typography
 
@@ -73,6 +77,14 @@ Study: How these apps make complex information feel simple. How whitespace creat
   - No section spacing under `py-12`
   - No compact data tables — use generous row height (`h-14` minimum)
 
+## Layout
+
+- **Proportions:** Content areas use golden ratio proportions for optimal reading comfort. Main content containers at ~65ch width (the golden ratio of comfortable line length).
+- **Grid:** 12-column, `gap-6` gutters, `max-w-5xl` container (narrower for content focus)
+- **Responsive breakpoints:** `sm:640` / `md:768` / `lg:1024` / `xl:1280`
+- **Card layout:** 3-col max on `lg`, 2-col on `md`, 1-col on `sm`
+- **Content width:** `max-w-xl` to `max-w-2xl` for body text. Narrower is better.
+
 ## Elevation
 
 - **Philosophy:** Whitespace IS the elevation. Minimal shadows. Hairline borders for structure.
@@ -104,6 +116,14 @@ Study: How these apps make complex information feel simple. How whitespace creat
   - No scale effects on hover
   - No scroll-triggered animations (content is always visible)
   - No `duration` over 400ms
+
+## Content
+
+- **Copy density:** Minimal. Every word earns its place.
+- **Headlines:** Statements, not descriptions. Say what it is, not what it does.
+- **Body:** If a sentence doesn't serve the user, delete it. Aim for brevity that feels generous, not sparse.
+- **CTAs:** Understated. "Continue", "Save", "Done". No urgency, no pressure.
+- **Tone:** Calm, friendly, human. Write like a thoughtful friend, not a brand.
 
 ## Component Patterns
 

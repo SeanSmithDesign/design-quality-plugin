@@ -1,12 +1,14 @@
-# Preset: Linear / Mercury
+# Preset: Clean Functional
 
 ## Contents
 - [Philosophy](#philosophy)
 - [Typography](#typography)
 - [Color](#color)
 - [Spacing](#spacing)
+- [Layout](#layout)
 - [Elevation](#elevation)
 - [Motion](#motion)
+- [Content](#content)
 - [Component Patterns](#component-patterns)
 - [Do / Don't Examples](#do--dont-examples)
 
@@ -15,6 +17,8 @@
 Clean, functional, minimal. Every element earns its place. Information density is high but never feels cluttered — achieved through precise spacing, restrained color, and typographic hierarchy rather than decoration. The interface disappears; the content speaks.
 
 ## Reference Apps
+
+Study these for this aesthetic — the preset is named for the style, not the brands:
 
 - **Linear** — Navigation patterns, sidebar density, keyboard-first design, status indicators
 - **Mercury** — Dashboard layout, data display, financial typography, trust-building UI
@@ -74,6 +78,14 @@ Study: How these apps use whitespace to create hierarchy without borders. How ty
   - No `gap-1` between substantial elements — too tight
   - No `py-32` or larger — excessive padding signals empty design, not breathing room
 
+## Layout
+
+- **Proportions:** Sidebar:content layouts follow ~38:62 golden ratio proportion. Two-column layouts use this split rather than 50:50.
+- **Grid:** 12-column, `gap-4` or `gap-6` gutters, `max-w-7xl` container
+- **Responsive breakpoints:** `sm:640` / `md:768` / `lg:1024` / `xl:1280`
+- **Card layout:** 4-col on `lg`, 2-col on `md`, 1-col on `sm`
+- **Content width:** Readable text at `max-w-prose` (~65ch) within wider containers
+
 ## Elevation
 
 - **Philosophy:** Shadows replace borders for depth. Borders are for form inputs and dividers only.
@@ -106,6 +118,14 @@ Study: How these apps use whitespace to create hierarchy without borders. How ty
   - No `duration-500` or longer — feels sluggish
   - No parallax scrolling
   - No animations on text (no typing effects, no color shifts)
+
+## Content
+
+- **Copy density:** High. This preset supports information-dense interfaces.
+- **Headlines:** Short, specific. Labels over sentences. Data over descriptions.
+- **Body:** Concise. 1-2 sentences max per block. If it can be a label, make it a label.
+- **CTAs:** 2-4 words, verb-first. "Create issue", "View details", "Export data".
+- **Tone:** Professional, direct, no marketing fluff. Write like a technical PM, not a copywriter.
 
 ## Component Patterns
 

@@ -1,4 +1,4 @@
-# Guard Checks (20)
+# Guard Checks (22)
 
 Quick-reference checklist for Guard mode. Before writing any UI code, self-check against these rules. Ordered by detection ease (static/obvious first, judgment calls last).
 
@@ -7,7 +7,7 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 ## Contents
 - [Static Checks](#static-checks) — #1-7
 - [Pattern Checks](#pattern-checks) — #8-13
-- [Judgment Checks](#judgment-checks) — #14-20
+- [Judgment Checks](#judgment-checks) — #14-22
 - [Quick Decision Tree](#quick-decision-tree)
 
 ---
@@ -100,8 +100,8 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 **Look for:** Shadow usage that doesn't match preset levels. Mixing borders and shadows on cards.
 **Fix:** Follow preset's elevation system
 ```tsx
-// Bad (linear-mercury): border border-gray-200 shadow-lg
-// Good (linear-mercury): shadow-xs hover:shadow-sm
+// Bad (clean-functional): border border-gray-200 shadow-lg
+// Good (clean-functional): shadow-xs hover:shadow-sm
 ```
 
 ### 10. Typography Weight Consistency
@@ -153,7 +153,7 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 
 ### 15. Color Accent Restraint
 **Severity:** Suggestion
-**Look for:** More accent-colored elements than the preset recommends (e.g., >2 copper elements for linear-mercury)
+**Look for:** More accent-colored elements than the preset recommends (e.g., >2 copper elements for clean-functional)
 **Fix:** Reduce accent usage. Use neutral colors for secondary elements.
 
 ### 16. Hover State Presence
@@ -186,6 +186,27 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 // Good: <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">Hero</h1>
 ```
 
+### 21. AI-Default Copy Patterns
+**Severity:** Suggestion
+**Look for:** Generic marketing copy that signals AI-generated content with no human editing:
+- Phrases: "Unlock the power of...", "Revolutionize your...", "Seamlessly integrate...", "Leverage the potential..."
+- Vague value props: "Take your workflow to the next level"
+- Excessive em dashes (also #7 but this is the broader content check)
+- Headlines over 15 words
+- CTAs that say "Learn more" or "Click here" instead of specific actions
+**Why:** This is the anti-vibe coding check for content. Generic copy is the text equivalent of generic UI.
+**Fix:** Rewrite with specifics. "Unlock the power of collaboration" becomes "Ship 2x faster with shared workspaces."
+
+### 22. Layout Proportion Balance
+**Severity:** Suggestion
+**Look for:** Layout proportions that feel arbitrary or unintentional:
+- Hero sections with no clear text:visual ratio (50:50 split when content is asymmetric)
+- Sidebar layouts with equal-width columns instead of ~38:62 proportion
+- Content areas with no max-width constraint (text runs edge to edge)
+- Card grids with inconsistent aspect ratios
+**Why:** Golden ratio (~1.618) and intentional proportions create visual harmony. Equal splits feel static.
+**Fix:** Apply golden ratio where appropriate: sidebar:content at ~38:62, hero text:visual at ~62:38. Set `max-w-prose` or `max-w-2xl` on text-heavy content.
+
 ---
 
 ## Quick Decision Tree
@@ -206,5 +227,7 @@ Writing a component?
 ├─ Missing hover state? → SUGGESTION.
 ├─ 7+ ungrouped equal-weight options? → SUGGESTION. Group or reduce (Hick's Law).
 ├─ Large heading with no responsive variants? → SUGGESTION. Add breakpoint sizes.
+├─ Generic AI copy ("Unlock the power of...")? → SUGGESTION. Rewrite with specifics.
+├─ 50:50 layout where content is asymmetric? → SUGGESTION. Try ~38:62 golden ratio.
 └─ All clear? → Write the code.
 ```

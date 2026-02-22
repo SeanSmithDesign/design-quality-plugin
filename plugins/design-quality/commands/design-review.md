@@ -35,13 +35,13 @@ Load `references/guard-checks.md` and run through the checklist:
 
 - **Errors** — Hardcoded colors, wrong fonts, missing accessible names, em dashes in copy
 - **Warnings** — Off-grid spacing, missing transitions, inconsistent elevation, line-height mismatches, flat dark-bg text hierarchy
-- **Suggestions** — Missing hover states, empty/loading states, semantic HTML, choice overload (Hick's Law), non-responsive headings
+- **Suggestions** — Missing hover states, empty/loading states, semantic HTML, choice overload (Hick's Law), non-responsive headings, AI-default copy patterns, layout proportion balance
 
 ### Phase 2: Score (rate quality)
 
 Load `references/review-rubric.md` and score against the 6 categories:
 
-- **Hierarchy** — Visual weight, semantic HTML, heading order, narrative flow
+- **Hierarchy** — Visual weight, semantic HTML, heading order, narrative flow, copy quality, layout proportions
 - **Typography** — Font compliance, weight consistency, tracking, line-height ranges
 - **Color** — Semantic tokens, contrast ratios, dark mode, 60-30-10 distribution
 - **Spacing** — Grid adherence, consistent padding, touch targets

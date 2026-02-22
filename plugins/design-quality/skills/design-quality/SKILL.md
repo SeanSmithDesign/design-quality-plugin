@@ -3,7 +3,7 @@ name: design-quality
 description: Core design quality engine. Loads project aesthetic presets, enforces style rules during UI work, and proactively recommends /design-brief and /design-review at the right time.
 license: MIT
 metadata:
-  version: 1.1.0
+  version: 1.2.0
   category: design
   domain: design-quality
   platforms: Web, iOS, macOS, Android, Cross-platform
@@ -22,7 +22,7 @@ keywords:
 
 # Design Quality
 
-Taste is the bottleneck, not execution. This skill captures project-specific aesthetic decisions so every AI-generated component inherits them automatically.
+Taste is the bottleneck, not execution. Vibe-coded UIs default to generic aesthetics. This skill captures intentional design decisions so every AI-generated component inherits real taste, not AI defaults. The antidote to vibe coding.
 
 ## Related Skills
 
@@ -40,13 +40,13 @@ This is the core engine. Three commands handle explicit actions:
 
 Read the project's `CLAUDE.md` for a `## Design Quality` section. Extract:
 
-- **Active Preset** — Which preset to load (e.g., `linear-mercury`)
+- **Active Preset** — Which preset to load (e.g., `clean-functional`)
 - **Reference URLs** — Sites to study for aesthetic reference
 - **Project Overrides** — Any preset values to customize
 
-Load the preset from `~/.claude/skills/design/design-quality/presets/<name>.md`.
+Load the preset from the plugin's `presets/<name>.md`. See `presets/index.md` for available presets.
 
-If no config exists, default to `linear-mercury` preset.
+If no config exists, default to `clean-functional` preset.
 
 ## Step 2: Skill Precedence
 
@@ -113,26 +113,28 @@ This is automatic — no user action needed. Use `/design-review` for the explic
 
 ### Built-in Presets
 
-| Preset | Aesthetic | Best For |
-|--------|-----------|----------|
-| `linear-mercury` | Clean, functional, minimal | SaaS dashboards, dev tools, productivity apps |
-| `stripe-vercel` | Premium, polished, depth | Marketing sites, developer platforms, fintech |
-| `apple-notion` | Refined simplicity | Consumer apps, content tools, note-taking |
+See `presets/index.md` for the full catalog. Current presets:
 
-Presets are at `~/.claude/skills/design/design-quality/presets/`.
+| Preset | Category | Aesthetic | Best For |
+|--------|----------|-----------|----------|
+| `clean-functional` | minimal | Clean, functional, minimal | SaaS dashboards, dev tools, productivity apps |
+| `premium-depth` | premium | Premium, polished, depth | Marketing sites, developer platforms, fintech |
+| `refined-minimal` | minimal | Refined simplicity | Consumer apps, content tools, note-taking |
 
 ### Custom Presets
 
-Create a new `.md` file in `presets/` following the same structure. Reference it in CLAUDE.md:
+Copy `presets/_template.md` to create a new preset. The template defines all required sections (Philosophy, Typography, Color, Spacing, Layout, Elevation, Motion, Content, Component Patterns, Do/Don't). Add a row to `presets/index.md` and reference it in CLAUDE.md:
 
 ```markdown
 ## Design Quality
 **Active Preset:** `my-custom-preset`
 ```
 
+Presets can specify golden ratio proportions for layout (sidebar:content at ~38:62, hero splits at ~62:38).
+
 ### Per-Session Override
 
-> "Use the stripe-vercel preset for this session"
+> "Use the premium-depth preset for this session"
 
 Overrides the project default until the session ends.
 

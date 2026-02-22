@@ -6,12 +6,13 @@ argument-hint: "[optional: project type or reference URL]"
 
 # Design Direction
 
-Guide the user to the right aesthetic preset. This is the Visual Direction step — gather context, identify patterns, recommend an aesthetic.
+This is the anti-vibe coding step. Instead of letting AI pick defaults, the user makes intentional aesthetic choices. Guide them to the right preset by gathering context, identifying patterns, and recommending an aesthetic.
 
 ## Setup
 
 1. Read the project's `CLAUDE.md` for a `## Design Quality` section
-2. Load the preset system overview from the design-quality skill
+2. Load `presets/index.md` to discover available presets and categories
+3. Load the preset system overview from the design-quality skill
 
 ## Argument
 
@@ -35,25 +36,25 @@ Walk through these questions. Keep it conversational — one question at a time.
 
 | Answer | Leans Toward | Why |
 |--------|-------------|-----|
-| SaaS dashboard, admin panel, dev tool | `linear-mercury` | Information density needs clean hierarchy. Hick's Law — reduce decision fatigue. |
-| Marketing site, landing page, portfolio | `stripe-vercel` | First impressions need visual confidence. Proven structure: Hero → Proof → CTA. |
-| Consumer app, content tool, note-taking | `apple-notion` | Daily-use tools need to disappear. Simplicity builds habit. |
+| SaaS dashboard, admin panel, dev tool | `clean-functional` | Information density needs clean hierarchy. Hick's Law — reduce decision fatigue. |
+| Marketing site, landing page, portfolio | `premium-depth` | First impressions need visual confidence. Proven structure: Hero → Proof → CTA. |
+| Consumer app, content tool, note-taking | `refined-minimal` | Daily-use tools need to disappear. Simplicity builds habit. |
 
 **2. Target Audience (ICP)**
 
 | Answer | Leans Toward | Why |
 |--------|-------------|-----|
-| Technical users who value efficiency | `linear-mercury` | They notice unnecessary elements. Respect their time. |
-| Prospects who need to trust the brand | `stripe-vercel` | Polish signals investment. Premium aesthetic builds credibility. |
-| Everyday users who want calm | `apple-notion` | Cognitive load is the enemy. Whitespace is a feature. |
+| Technical users who value efficiency | `clean-functional` | They notice unnecessary elements. Respect their time. |
+| Prospects who need to trust the brand | `premium-depth` | Polish signals investment. Premium aesthetic builds credibility. |
+| Everyday users who want calm | `refined-minimal` | Cognitive load is the enemy. Whitespace is a feature. |
 
 **3. Emotional Tone**
 
 | Answer | Leans Toward | Why |
 |--------|-------------|-----|
-| Clean, fast, no-nonsense | `linear-mercury` | Functional minimalism. |
-| Premium, polished, confident | `stripe-vercel` | Craft as communication. |
-| Simple, calm, invisible | `apple-notion` | The best interface is forgotten. |
+| Clean, fast, no-nonsense | `clean-functional` | Functional minimalism. |
+| Premium, polished, confident | `premium-depth` | Craft as communication. |
+| Simple, calm, invisible | `refined-minimal` | The best interface is forgotten. |
 
 **4. Reference Sites** (optional)
 
@@ -71,9 +72,9 @@ Based on answers, present:
 
 1. **Recommended preset** with 1-2 sentence rationale linking project type + audience + tone to the preset's philosophy
 2. **Color scheme type:**
-   - `linear-mercury` → Monochromatic (neutral + single accent)
-   - `stripe-vercel` → Complementary (dark canvas + vibrant accent)
-   - `apple-notion` → Monochromatic (near-monochrome + muted accent)
+   - `clean-functional` → Monochromatic (neutral + single accent)
+   - `premium-depth` → Complementary (dark canvas + vibrant accent)
+   - `refined-minimal` → Monochromatic (near-monochrome + muted accent)
 3. **Color psychology note** — Why the accent approach fits (e.g., "Blue signals trust for financial products" or "Copper adds warmth to technical tools")
 4. **Key design principle** — One relevant insight:
    - Dashboard → "Hick's Law: fewer choices, faster decisions. This preset keeps the UI quiet."
@@ -90,7 +91,19 @@ If the scores are close between two presets, show a comparison table:
 | Motion | ... | ... |
 | Best for | ... | ... |
 
-If no built-in preset fits, offer to help define a custom preset.
+5. **Layout proportions note:**
+   - Dashboard layouts: "Sidebar:content at ~38:62 golden ratio proportion."
+   - Marketing layouts: "Hero sections use ~62:38 golden ratio split for text:visual."
+   - Consumer layouts: "Content areas use golden ratio proportions for reading comfort (~65ch)."
+
+6. **Content density note:**
+   - Dashboard UIs: "Information-dense. Short labels, data-first copy."
+   - Marketing pages: "Scannable. Headlines 6-12 words, short paragraphs, strong CTAs."
+   - Consumer apps: "Minimal copy. Every word earns its place."
+
+After presenting the recommendation, frame why it matters: "This preset replaces generic AI defaults with [specific aesthetic philosophy]. Every rule in the brief will be an intentional choice."
+
+If no built-in preset fits, offer to help define a custom preset using the `_template.md`.
 
 ## Output
 

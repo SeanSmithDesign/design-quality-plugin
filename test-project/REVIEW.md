@@ -19,9 +19,9 @@ No `## Design Quality` section in CLAUDE.md. Starting the Visual Direction walkt
 
 ### Recommendation
 
-**Preset: `linear-mercury`**
+**Preset: `clean-functional`**
 
-Rationale: A professional dashboard for technical users needs clean hierarchy and minimal distraction. Linear-mercury's functional minimalism reduces decision fatigue (Hick's Law) and keeps information density high without clutter.
+Rationale: A professional dashboard for technical users needs clean hierarchy and minimal distraction. Clean-functional's functional minimalism reduces decision fatigue (Hick's Law) and keeps information density high without clutter.
 
 - **Color scheme:** Monochromatic (stone neutral + copper accent)
 - **Color psychology:** Copper adds warmth to a technical tool without competing with data
@@ -30,7 +30,7 @@ Rationale: A professional dashboard for technical users needs clean hierarchy an
 → Updated CLAUDE.md with:
 ```markdown
 ## Design Quality
-- **Active Preset:** linear-mercury
+- **Active Preset:** clean-functional
 - **Reference URLs:** linear.app, mercury.com
 - **Project Overrides:** None
 ```
@@ -41,9 +41,9 @@ Rationale: A professional dashboard for technical users needs clean hierarchy an
 
 ## Step 2: `/design-brief` (Generate Constraints)
 
-Generated from the linear-mercury preset:
+Generated from the clean-functional preset:
 
-### Style Brief (Preset: linear-mercury)
+### Style Brief (Preset: clean-functional)
 
 #### Typography
 - **Heading font:** Inter, 600 (semibold) for sections, 700 (bold) for hero only
@@ -110,12 +110,14 @@ Built `components/weather-dashboard-before.tsx` with intentional violations to t
 | `text-7xl` heading with no responsive variants | #20 | Suggestion |
 | No hover states on cards | #16 | Suggestion |
 | No loading state (returns null) | #17 | Suggestion |
+| AI-default copy "Unlock the power of..." | #21 | Suggestion |
+| Equal-width stats grid (no golden ratio) | #22 | Suggestion |
 
 ---
 
 ## Step 4: `/design-review components/weather-dashboard-before.tsx`
 
-### Phase 1: Guard (20 checks)
+### Phase 1: Guard (22 checks)
 
 | # | Check | Result | Details |
 |---|-------|--------|---------|
@@ -139,8 +141,10 @@ Built `components/weather-dashboard-before.tsx` with intentional violations to t
 | 18 | Semantic HTML | **SUGGESTION** | All `<div>` — no `<main>`, `<header>`, `<section>`, `<footer>` |
 | 19 | Choice overload (Hick's Law) | **SUGGESTION** | 9 ungrouped nav items with identical styling |
 | 20 | Responsive heading sizes | **SUGGESTION** | `text-7xl` with no responsive variants |
+| 21 | AI-default copy patterns | **SUGGESTION** | Footer uses em dashes (covered by #7), no specific generic phrases but copy is sparse |
+| 22 | Layout proportion balance | **SUGGESTION** | Stats grid uses equal-width columns; no golden ratio sidebar:content split |
 
-**Result: 5 Errors, 6 Warnings, 5 Suggestions**
+**Result: 5 Errors, 6 Warnings, 7 Suggestions**
 
 ### Phase 2: Score
 
@@ -153,7 +157,7 @@ Built `components/weather-dashboard-before.tsx` with intentional violations to t
 | Accessibility | Fail | ~4/17 | No aria-labels, 32px touch targets, no focus indicators |
 | Polish | Fail | ~3/17 | No shadows, no hover states, no transitions, no loading state, no error state |
 
-**Score: 41/100** (Preset: linear-mercury)
+**Score: 41/100** (Preset: clean-functional)
 
 ### Strengths
 - Temperature display creates clear visual hierarchy
@@ -209,7 +213,7 @@ All errors and warnings auto-fixed. Suggestions applied manually:
 
 ## Step 6: Re-Review — `/design-review components/weather-dashboard.tsx`
 
-### Phase 1: Guard (20 checks)
+### Phase 1: Guard (22 checks)
 
 | # | Check | Result |
 |---|-------|--------|
@@ -233,6 +237,8 @@ All errors and warnings auto-fixed. Suggestions applied manually:
 | 18 | Semantic HTML | PASS |
 | 19 | Choice overload | PASS |
 | 20 | Responsive heading sizes | PASS |
+| 21 | AI-default copy patterns | PASS |
+| 22 | Layout proportion balance | PASS |
 
 **Result: 0 Errors, 0 Warnings, 0 Suggestions**
 
@@ -247,7 +253,7 @@ All errors and warnings auto-fixed. Suggestions applied manually:
 | Accessibility | Pass | ~15/17 | aria-labels, 44px targets, semantic HTML |
 | Polish | Pass | ~16/17 | Shadow elevation, hover states, transitions, skeleton loading |
 
-**Score: 94/100** (Preset: linear-mercury)
+**Score: 94/100** (Preset: clean-functional)
 
 ### Improvement
 

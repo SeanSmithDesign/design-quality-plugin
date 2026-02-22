@@ -37,6 +37,8 @@ Does the interface guide the eye? Can you identify the most important element in
 - [ ] No two elements compete for primary attention
 - [ ] Primary CTA is the largest interactive target in its section (Fitts' Law — larger targets are faster to reach)
 - [ ] Page follows a narrative flow (marketing: Problem → Solution → Proof → CTA; dashboards: Task → Content → Actions)
+- [ ] Layout proportions are intentional (golden ratio or deliberate deviation)
+- [ ] Copy follows appropriate length conventions (headlines 6-12 words, CTAs 2-5 words, body scannable)
 
 ### Common Violations
 | Violation | Severity | Example |
@@ -47,6 +49,8 @@ Does the interface guide the eye? Can you identify the most important element in
 | CTA not dominant target | Warning | Secondary button is same size as primary CTA (Fitts' Law) |
 | Too many ungrouped choices | Suggestion | 8 nav items with identical styling (Hick's Law) |
 | Non-semantic HTML | Warning | `<div>` used instead of `<section>` or `<nav>` |
+| Generic AI copy patterns | Suggestion | "Unlock the power of..." headline with no specificity |
+| Arbitrary layout proportions | Suggestion | 50:50 hero split where content is asymmetric |
 
 ---
 
@@ -208,7 +212,7 @@ Rigid rule-following produces generic design. Good design knows when to deviate.
 
 ### Typography
 - Display type can break weight/size limits for hero compositions
-- One serif accent phrase in a sans-serif system adds personality (ebook + linear-mercury preset endorse this)
+- One serif accent phrase in a sans-serif system adds personality (ebook + clean-functional preset endorse this)
 - Exceeding 3 font weights is acceptable in rich typographic layouts (pricing pages, dashboards)
 
 ### Color

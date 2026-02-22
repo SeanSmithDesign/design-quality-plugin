@@ -90,8 +90,9 @@ export default function WeatherDashboard() {
       <div className="flex justify-between items-center mb-5">
         <div>
           <div className="text-3xl font-bold text-white">{weather.location}</div>
+          {/* Violation: AI-default copy patterns (#21) */}
           <p className="text-gray-400 text-sm mt-1">
-            Updated just now — {new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
+            Unlock the power of real-time weather insights — {new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
           </p>
         </div>
         <div className="flex gap-2">
@@ -146,7 +147,7 @@ export default function WeatherDashboard() {
         </div>
       </div>
 
-      {/* Stats Grid — Violation: off-grid spacing (p-5, gap-3.5), no transitions */}
+      {/* Stats Grid — Violation: off-grid spacing (p-5, gap-3.5), no transitions, equal-width columns (#22) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 mb-5">
         {[
           { label: "Humidity", value: `${weather.humidity}%`, icon: <Droplets className="w-5 h-5 text-blue-400" /> },

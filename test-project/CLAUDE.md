@@ -2,7 +2,7 @@
 
 ## Design Quality
 
-**Active Preset:** `linear-mercury`
+**Active Preset:** `clean-functional`
 
 **Reference URLs:**
 - https://linear.app
@@ -10,4 +10,4 @@
 
 **Project Overrides:** None
 
-> Preset chosen via `/design-direction` — SaaS dashboard for technical users, clean/fast tone.
+> Preset chosen via `/design-direction` — SaaS dashboard for technical users, clean/fast tone. Anti-vibe coding: intentional choices over AI defaults.

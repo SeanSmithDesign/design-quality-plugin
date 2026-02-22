@@ -28,9 +28,9 @@ claude plugin add https://github.com/SeanSmithDesign/design-quality-plugin
 
 | Preset | Aesthetic | Best For |
 |--------|-----------|----------|
-| `linear-mercury` | Clean, functional, minimal | SaaS dashboards, dev tools, productivity apps |
-| `stripe-vercel` | Premium, polished, depth | Marketing sites, fintech, developer platforms |
-| `apple-notion` | Refined simplicity | Consumer apps, content tools, native Mac/iOS apps |
+| `clean-functional` | Clean, functional, minimal | SaaS dashboards, dev tools, productivity apps |
+| `premium-depth` | Premium, polished, depth | Marketing sites, fintech, developer platforms |
+| `refined-minimal` | Refined simplicity | Consumer apps, content tools, native Mac/iOS apps |
 
 ## Supported Platforms
 
@@ -50,7 +50,7 @@ After installing, add a `## Design Quality` section to your project's `CLAUDE.md
 ```markdown
 ## Design Quality
 
-**Active Preset:** `linear-mercury`
+**Active Preset:** `clean-functional`
 
 **Reference URLs:**
 - https://linear.app
@@ -69,7 +69,7 @@ After installing, add a `## Design Quality` section to your project's `CLAUDE.md
 | **Reference URLs** | No | Sites to study for aesthetic reference. Claude will analyze these for visual patterns. |
 | **Project Overrides** | No | Override any preset value for this project (e.g., accent color, allowed fonts) |
 
-If no `## Design Quality` section exists, the plugin defaults to the `linear-mercury` preset.
+If no `## Design Quality` section exists, the plugin defaults to the `clean-functional` preset.
 
 ## Usage
 
@@ -112,7 +112,7 @@ Outputs typography, color, spacing, elevation, motion, and component pattern con
 
 Override the project preset for one brief:
 ```
-/design-brief stripe-vercel
+/design-brief premium-depth
 ```
 
 ### After coding: Review, score, and fix
@@ -128,7 +128,7 @@ Runs the full pipeline — guard checks, quality scoring, and auto-fix:
 
 | Category | What's Checked |
 |----------|---------------|
-| Hierarchy | Visual weight, semantic HTML, heading order |
+| Hierarchy | Visual weight, semantic HTML, heading order, copy quality, layout proportions |
 | Typography | Font compliance, weight consistency, tracking |
 | Color | Semantic tokens, contrast ratios, dark mode |
 | Spacing | Grid adherence, touch targets, breathing room |
@@ -148,55 +148,65 @@ Review a single file, a directory, or the whole project:
 
 ## Preset Details
 
-### `linear-mercury` — Clean, Functional, Minimal
+### `clean-functional` — Clean, Functional, Minimal
 
 **Philosophy:** Eliminate everything non-essential. Every pixel of ornamentation must earn its place through function.
 
 - **Typography:** Single font family (e.g., Inter). Hierarchy through weight and size, not multiple fonts.
 - **Color:** 2-color max (neutral + one accent). Semantic tokens only.
+- **Layout:** Sidebar:content at ~38:62 golden ratio. Readable text at ~65ch.
 - **Elevation:** Shadows over borders. Subtle, functional depth.
 - **Spacing:** 8px grid, generous whitespace, breathing room.
 - **Motion:** Functional only — no decorative animation. Fast (150-200ms).
+- **Content:** High density. Labels over sentences. Data over descriptions.
 
 **Best for:** SaaS dashboards, dev tools, productivity apps, admin panels.
 
-### `stripe-vercel` — Premium, Polished, Depth
+### `premium-depth` — Premium, Polished, Depth
 
 **Philosophy:** Invest in the details that signal quality. Deep layered surfaces, confident typography, controlled drama.
 
-- **Typography:** Distinctive display font for headings, clean sans-serif for body.
+- **Typography:** Distinctive display font for headings, clean sans-serif for body. Optional 1.618 golden ratio typescale for hero text.
 - **Color:** Rich palette with gradients. Dark themes with luminous accents.
+- **Layout:** Hero sections at ~62:38 golden ratio split (text:visual).
 - **Elevation:** Deep layered shadows, glass/blur effects, pronounced depth.
 - **Spacing:** Generous hero sections, tight component spacing, strong rhythm.
 - **Motion:** Staggered reveals, smooth parallax, entrance choreography.
+- **Content:** Headlines 6-12 words. Short paragraphs. Strong verb-first CTAs.
 
 **Best for:** Marketing sites, fintech, developer platforms, landing pages.
 
-### `apple-notion` — Refined Simplicity
+### `refined-minimal` — Refined Simplicity
 
 **Philosophy:** Let content breathe. The best interface is the one you forget is there.
 
 - **Typography:** Weight-based hierarchy (no size jumps). System fonts or refined sans-serif.
 - **Color:** Near-monochrome with one accent. Subtle, purposeful color.
+- **Layout:** Content areas at golden ratio proportions. Containers at ~65ch for reading comfort.
 - **Elevation:** Hairline borders preferred over shadows. Flat, content-first.
 - **Spacing:** Whitespace-first. Generous padding, unhurried layouts.
 - **Motion:** Organic, spring-based. Feels physical, not digital.
+- **Content:** Minimal. Every word earns its place. Calm, human tone.
 
 **Best for:** Consumer apps, content tools, note-taking, native Mac/iOS apps.
 
 ### Custom Presets
 
-Create a `.md` file in `skills/design-quality/presets/` following the same structure as built-in presets:
+Copy `presets/_template.md` to create a new preset. The template defines all required sections:
 
 1. **Philosophy** — One paragraph defining the aesthetic
-2. **Typography** — Fonts, weights, sizes, tracking
-3. **Color** — Palette, semantic tokens, accent rules
-4. **Spacing** — Grid system, padding conventions
-5. **Elevation** — Shadow/border hierarchy
-6. **Motion** — Animation approach, timing
-7. **Do/Don't** — Code examples for each platform you target
+2. **Reference Apps** — 2-3 apps to study
+3. **Typography** — Fonts, weights, sizes, tracking, typescale ratio
+4. **Color** — Palette, semantic tokens, accent rules, 60-30-10 distribution
+5. **Spacing** — Grid system, padding conventions
+6. **Layout** — Golden ratio applications, proportions, responsive breakpoints
+7. **Elevation** — Shadow/border hierarchy
+8. **Motion** — Animation approach, timing
+9. **Content** — Copy density, headline length, CTA style, tone
+10. **Component Patterns** — Card, button, nav, form treatments
+11. **Do/Don't** — Code examples for each platform you target
 
-Reference it in your `CLAUDE.md`:
+Add a row to `presets/index.md` so `/design-direction` discovers it automatically, then reference it in your `CLAUDE.md`:
 ```markdown
 ## Design Quality
 **Active Preset:** `my-custom-preset`
@@ -206,7 +216,7 @@ Reference it in your `CLAUDE.md`:
 
 Temporarily switch presets without changing CLAUDE.md:
 ```
-Use the stripe-vercel preset for this session
+Use the premium-depth preset for this session
 ```
 
 ## Scoring
@@ -244,7 +254,7 @@ You choose: fix all, fix errors only, or handle manually.
 
 ## Guard Checks
 
-The full guard checklist covers 20 items in three tiers:
+The full guard checklist covers 22 items in three tiers:
 
 ### Errors (must fix)
 1. No hardcoded colors (hex, rgb, platform color literals)
@@ -271,14 +281,16 @@ The full guard checklist covers 20 items in three tiers:
 18. Semantic markup usage
 19. Choice overload (Hick's Law — too many ungrouped options)
 20. Responsive heading sizes
+21. AI-default copy patterns (generic headlines, vague CTAs)
+22. Layout proportion balance (golden ratio, intentional splits)
 
 ## Philosophy
 
 > "AI amplified the one skill which I ignored: developing taste."
 
-This plugin doesn't replace taste — it captures and enforces taste decisions so every AI-generated component inherits them automatically.
+Vibe coding produces generic UIs. Every AI tool defaults to the same sans-serif, the same blue accent, the same "Unlock the power of..." headline. This plugin is the antidote: capture intentional design decisions once, enforce them everywhere.
 
-The approach is inspired by the **Zoom-In Method**: start at 50% (brief sets constraints), push to 99% (guard catches violations during coding), then reach 100% (review scores and polishes the final result).
+It doesn't replace taste. It captures and enforces taste decisions so every AI-generated component inherits them automatically. The approach is inspired by the **Zoom-In Method**: start at 50% (brief sets constraints), push to 99% (guard catches violations during coding), then reach 100% (review scores and polishes the final result).
 
 ## Workflow Integration
 
