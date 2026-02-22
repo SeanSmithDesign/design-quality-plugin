@@ -1,386 +1,268 @@
-# Comprehensive Plugin Plan v2
+# Comprehensive Plugin Plan
 
-## Current State
+## Overview
 
-The plugin (v1.1.0) has all core pieces built:
-- 2 commands (`/design-brief`, `/design-review`)
-- 1 skill (`design-quality`)
-- 3 presets (`linear-mercury`, `stripe-vercel`, `apple-notion`)
-- 2 reference files (`guard-checks.md` with 18 checks, `review-rubric.md` with 6 categories)
-- Plugin manifest, README, LICENSE
-
-Previous iteration added: TOCs, per-phase loading, ebook principles (line-height, weight hierarchy, 60-30-10, dark bg hierarchy), 3 new guard checks (em dashes, line-height ranges, dark bg text), "When to Break the Rules" section, ecosystem positioning.
-
-## Source Material: Ebook Principles to Embed
-
-The "Web Design Mastery" ebook (Parts 1-4) contains specific principles that should be embedded across the plugin. Here's the full mapping:
-
-### From Part 2: Essential Skills — Psychology
-
-| Principle | What It Says | Where It Goes |
-|-----------|-------------|---------------|
-| **Fitts' Law** | Larger, closer targets are easier to hit. Primary actions should be the biggest interactive element. | Guard check #5 (touch targets) already covers minimums. **Add to `/design-direction`**: when recommending presets for dashboards, note Fitts' Law — primary actions need sizing dominance. **Add to review rubric** Hierarchy category: "Primary CTA is the largest interactive target in its section." |
-| **Hick's Law** | More choices = longer decision time. Reduce options, group related items. | **Add to `/design-direction`**: inform preset choice — dashboards need Hick's Law reduction (linear-mercury's minimal aesthetic). Marketing pages can have more visual complexity. **Add to guard checks** as new Suggestion #19: "More than 5-7 ungrouped equal-weight choices in a section." |
-| **Zeigarnik Effect** | People remember incomplete tasks. Progress indicators, breadcrumbs, and onboarding flows keep users engaged. | **Add to review rubric** Polish category: "Multi-step flows have progress indicators." **Add to `/design-brief`** component patterns section: mention progress indicators for multi-step flows. |
-
-### From Part 3: Web Design SOP
-
-| Principle | What It Says | Where It Goes |
-|-----------|-------------|---------------|
-| **ICP (Ideal Customer Profile)** | Design decisions should be informed by who the user is — demographics, psychographics, pain points, goals. | **`/design-direction` core input**: Ask about target audience before recommending a preset. A B2B SaaS for enterprise → linear-mercury. A consumer fintech → stripe-vercel. A personal productivity tool → apple-notion. |
-| **Visual Direction Process** | Moodboard → style tiles → aesthetic exploration before committing to a direction. Gather references, identify patterns, narrow to a direction. | **`/design-direction` execution flow**: The command IS the visual direction step. Walk through: gather references → identify aesthetic patterns → map to preset → recommend. The ebook's moodboard process becomes the preset selection workflow. |
-| **Storytelling & Copywriting** | Features → Benefits → Headlines. Core messaging hierarchy. Problem → Solution → Proof → CTA flow. | **`/design-brief`** should include a **Page Narrative** section for marketing presets (stripe-vercel): "Structure content as Problem → Solution → Proof → CTA." **Review rubric** Hierarchy category already has "narrative flow" — strengthen with specific patterns per preset. |
-| **Website Structure** | Sitemap, hierarchy, navigation patterns should match content architecture. | **`/design-brief`** should reference page structure patterns from the preset. Linear-mercury: sidebar + content. Stripe-vercel: hero → sections. Apple-notion: content-first with minimal nav. |
-| **Discovery Process** | Understand client goals, business objectives, and competitive landscape before designing. | **`/design-direction`**: Include "What are the project's primary goals?" as part of the questionnaire. Goals → aesthetic mapping (trust = stripe-vercel, efficiency = linear-mercury, simplicity = apple-notion). |
-
-### From Part 4: Design Essentials — Colors
-
-| Principle | What It Says | Where It Goes |
-|-----------|-------------|---------------|
-| **Color Schemes** | Monochromatic, analogous, complementary, triadic, split-complementary, tetradic. Each creates a different emotional effect. | **`/design-direction`**: When recommending presets, explain the color scheme type. Linear-mercury = monochromatic (neutral + one accent). Stripe-vercel = complementary/analogous (dark + vibrant accent). Apple-notion = monochromatic (near-monochrome). |
-| **Color Psychology** | Red = energy/urgency, Blue = trust/stability, Green = growth/health, Purple = premium/creative, Orange = friendly/confident, Black = sophisticated/powerful. | **`/design-direction`**: After choosing a preset, recommend accent color based on psychology + project goals. "For a fintech dashboard, blue signals trust" → copper/blue for linear-mercury. **`/design-brief`**: Include color psychology note in the Color section. |
-| **60-30-10 Rule** | 60% dominant (background), 30% secondary (text/icons), 10% accent. Creates balanced, professional color distribution. | Already in stripe-vercel preset and review rubric Color category. **Strengthen in `/design-brief`**: Make 60-30-10 distribution explicit in every brief's Color section with preset-specific ratios (linear-mercury: 90/8/2, stripe-vercel: 60/30/10, apple-notion: 85/12/3). |
-| **Common Color Mistakes** | Using too many colors, poor contrast, ignoring color blindness, inconsistent palette. | Already covered in guard checks #1-3 and review rubric. No change needed. |
-| **Gradient Theory** | Use 2-3 stops, follow the color wheel for harmonious gradients, avoid muddy combinations. | **Presets**: stripe-vercel already allows gradients. **`/design-brief`**: For stripe-vercel, include gradient guidance: "2-3 stops, harmonious direction (adjacent on color wheel)." |
-
-### From Part 4: Design Essentials — Typography
-
-| Principle | What It Says | Where It Goes |
-|-----------|-------------|---------------|
-| **Typographic Levels** | Display, Heading, Subheading, Body, Caption — a system of 5 levels creates clear hierarchy. | **`/design-brief`**: Output the 5-level type system from the active preset (already in preset files as H1-H4 + Body + Labels). Make the level names explicit: "Display (hero only) → Heading → Subheading → Body → Caption." |
-| **Typescale Ratios** | 1.25 (Major Third), 1.333 (Perfect Fourth), 1.5 (Perfect Fifth). Each ratio creates different rhythm — tighter for dense UIs, wider for editorial. | **`/design-brief`**: Include the typescale ratio for the active preset. Linear-mercury: ~1.25 (compact). Stripe-vercel: ~1.333 (confident). Apple-notion: ~1.25 (subtle). **Presets**: Add explicit typescale ratio to each preset's Typography section. |
-| **Line-Height Rules** | Body: 1.4-1.6x. Headings: 1.1-1.2x. Tighter line-height as font size increases. | Already in guard check #12 and all 3 presets. No change needed. |
-| **Weight Hierarchy** | Use weight changes (regular → medium → semibold → bold) to create hierarchy without changing font size. | Already in presets (especially apple-notion). Already in review rubric Typography category. No change needed. |
-| **Responsive Typography** | Type sizes should scale with viewport. Headings reduce more than body on mobile. | **`/design-brief`**: Add responsive note: "Headings scale down 1-2 steps on mobile. Body stays at text-base." **Guard checks**: New Suggestion #20: "Heading sizes don't adapt at mobile breakpoints." |
-| **Kerning & Tracking** | Tight tracking for headings (tracking-tight), normal for body, wider for labels/caps. | Already in presets. No change needed. |
-
-### From Part 4: Design Essentials — Grids & Layout
-
-| Principle | What It Says | Where It Goes |
-|-----------|-------------|---------------|
-| **8px Grid System** | All spacing derives from 8px base. 4px sub-grid for fine adjustments. | Already in guard check #8 and all 3 presets. No change needed. |
-| **12-Column Grid** | Standard responsive column grid with gutters. | **`/design-brief`**: For web projects, include layout grid guidance: "12-column grid, `gap-6` gutters, max-width container." |
-| **Responsive Breakpoints** | sm (640px), md (768px), lg (1024px), xl (1280px). Content reflows at each. | **`/design-brief`**: Include breakpoint-aware notes: "Cards: 3-col on lg, 2-col on md, 1-col on sm." |
-
-### From Part 4: High-Converting Landing Page Structure
-
-| Principle | What It Says | Where It Goes |
-|-----------|-------------|---------------|
-| **Section Ordering** | Hero → Social Proof → Features/Benefits → Testimonials → CTA. Proven conversion pattern. | **`/design-brief`**: For stripe-vercel (marketing preset), include page structure: "Hero → Social proof → Features → Testimonials → CTA." **`/design-direction`**: When recommending stripe-vercel, mention this structure. |
-| **Hero Best Practices** | Clear headline, supporting subhead, single CTA, relevant visual. Above the fold. | **`/design-brief`**: For marketing presets, include hero section spec from preset (font sizes, spacing, CTA styling). |
+This plan covers the **entire** design-quality plugin — every file, every source, every principle. Not just new additions, but a full audit of what exists, what needs to change, and why.
 
 ---
 
-## What's Missing in the Plugin
+## Sources
 
-### 1. No `/design-direction` Command
+Everything we're pulling from:
 
-**The gap:** `/design-brief` generates constraints from an *already-chosen* preset. But there's no step for **choosing the right aesthetic direction** in the first place.
+### 1. Web Design Mastery Ebook (Parts 1-4)
+- **Part 2**: Psychology — Fitts' Law, Hick's Law, Zeigarnik Effect
+- **Part 3**: Web Design SOP — Visual Direction process, ICP research, Discovery, Storytelling & Copywriting (Features → Benefits → Headlines), Website Structure
+- **Part 4**: Design Essentials — Color theory/schemes/psychology/60-30-10/gradients, Typography (typescale ratios, line-height, weight hierarchy, responsive), Grids & Layout, High-converting Landing Page Structure, Zoom-In Method
 
-**Current flow:** User picks a preset (somehow) → `/design-brief` → code → `/design-review`
+### 2. Anti-Vibe Coding Philosophy
+The concept that "vibe coding" — letting AI generate UI with no aesthetic constraints — produces generic, tasteless, samey interfaces. This plugin is the antidote: intentional design decisions captured before coding begins, enforced during coding, and verified after. Anti-vibe coding means every UI choice is deliberate, not default.
 
-**Complete flow:** `/design-direction` (choose/define aesthetic) → `/design-brief` (generate constraints) → code → `/design-review` (score + fix)
+### 3. Golden Ratio (1.618)
+The mathematical proportion found throughout nature and classical design. Applications:
+- **Typescale**: 1.618 as a ratio option (more dramatic than 1.333 Perfect Fourth)
+- **Layout proportions**: Sidebar:content at ~38:62, image:text areas, hero split ratios
+- **Spacing relationships**: Section padding ratios, content block proportions
+- **Composition**: Focal point placement using golden spiral/grid
 
-**Ebook source:** This command IS the "Visual Direction" step from Part 3 of the ebook, combined with the ICP research and discovery process. The ebook says: gather references → identify patterns → narrow to a direction. The command translates that into: ask about project + audience → analyze references → map to preset → recommend.
+### 4. Best Practices on Length & Structure
+Content and copy guidelines:
+- **Headlines**: 6-12 words, front-load the value
+- **Subheadlines**: 15-25 words, expand on the headline
+- **Body paragraphs**: 2-4 sentences per block, scannable
+- **CTAs**: 2-5 words, action-oriented verb first ("Start building", not "Click here")
+- **Section depth**: Each page section should have one clear purpose — don't overload
+- **Information density**: Match density to project type (dashboards = high density, marketing = low density)
 
-**Psychology integration:** Fitts' Law and Hick's Law from Part 2 inform the preset recommendation. Dashboard UIs need Hick's Law reduction (fewer choices, cleaner layout → linear-mercury). Marketing pages can handle more visual drama (stripe-vercel). Consumer apps need effortless flow (apple-notion).
-
-### 2. `/design-brief` Missing Ebook Depth
-
-**Current state:** The brief outputs Typography, Color, Spacing, Elevation, Motion, and Component Patterns from the preset. This is correct but shallow — it's just reading the preset file.
-
-**What's missing from the ebook:**
-- **Typescale ratio** — Each preset should specify its ratio (1.25, 1.333, etc.) and the brief should include it
-- **Color psychology** — Brief should note WHY the preset's accent color works for the project type
-- **60-30-10 distribution** — Should be explicit with preset-specific ratios
-- **Page narrative structure** — For marketing presets, include Problem → Solution → Proof → CTA
-- **Layout grid** — 12-column grid, responsive breakpoints, container max-widths
-- **Responsive typography** — How heading sizes scale down on mobile
-- **Gradient guidance** — For stripe-vercel, include gradient rules (2-3 stops, color harmony)
-- **Progress indicators** — For multi-step flows (Zeigarnik Effect)
-
-### 3. Guard Checks Missing 2 Ebook Principles
-
-Current: 18 checks. After: 20 checks.
-
-| New Check | Source | Severity |
-|-----------|--------|----------|
-| **#19: Choice Overload** | Hick's Law (Part 2) | Suggestion — "More than 7 ungrouped equal-weight options in a section. Group into categories or reduce." |
-| **#20: Non-Responsive Headings** | Responsive Typography (Part 4) | Suggestion — "Heading sizes don't change at mobile breakpoints (no `sm:`, `md:`, `lg:` responsive variants on headings)." |
-
-### 4. Review Rubric Additions
-
-| Category | Addition | Source |
-|----------|----------|--------|
-| **Hierarchy** | "Primary CTA is the largest interactive target in its section" (Fitts' Law) | Part 2 |
-| **Hierarchy** | Strengthen narrative flow with preset-specific patterns | Part 3 storytelling |
-| **Polish** | "Multi-step flows have progress indicators" (Zeigarnik Effect) | Part 2 |
-
-### 5. Preset Enhancements
-
-Each preset's Typography section should add an explicit **Typescale Ratio** line:
-- `linear-mercury`: ~1.25 (Major Third) — compact, functional
-- `stripe-vercel`: ~1.333 (Perfect Fourth) — confident, generous
-- `apple-notion`: ~1.25 (Major Third) — subtle, understated
-
-### 6. SKILL.md Missing `/design-direction`
-
-- Add to Related Skills table
-- Add 2 proactive triggers (no config detected, user asks about style)
-- Update Workflow Integration table
-
-### 7. README Missing `/design-direction`
-
-- Add to command table (now 3 commands)
-- Update workflow diagrams (Full Pipeline and Minimal Pipeline)
-- Add usage section
-
-### 8. Test Project Doesn't Prove the Flow
-
-The test project needs a before/after demonstration of the complete direction → brief → build → review → fix → re-review flow.
-
-### 9. plugin.json Version Bump
-
-v1.1.0 → v1.2.0 (new command + ebook enhancements)
+### 5. Discussion Context
+- The plugin exists to solve the "taste bottleneck" in AI-assisted UI development
+- Workflow: direction → brief → build → review → fix → re-review
+- Token budget awareness (SKILL.md < 500 lines, references need TOCs over 100 lines)
+- Consistent file structure across all plugin components
+- Ecosystem positioning (complementary to rams, baseline-ui, deslop, web-interface-guidelines)
 
 ---
 
-## Implementation Plan
+## File-by-File Audit and Changes
 
-### Step 1: Create `/design-direction` command
+### Root Files
 
-**File:** `plugins/design-quality/commands/design-direction.md`
+#### `.claude-plugin/plugin.json` (root)
+**Current state**: v1.0.0, author URL points to `DT-Funding-Solutions`
+**Change**: Sync version to 1.2.0, update author URL to `SeanSmithDesign` to match `plugins/design-quality/.claude-plugin/plugin.json`
 
-Ebook principles embedded:
-- **Visual Direction process** (Part 3) → the guided walkthrough
-- **ICP research** (Part 3) → target audience questions
-- **Discovery** (Part 3) → project goals → aesthetic mapping
-- **Color psychology** (Part 4) → accent color recommendation
-- **Color schemes** (Part 4) → explain scheme type per preset
-- **Fitts' Law + Hick's Law** (Part 2) → inform preset recommendation rationale
-- **Landing page structure** (Part 4) → mention for marketing presets
+#### `.claude-plugin/marketplace.json`
+**Current state**: Says "2 commands" and v1.0.0
+**Change**: Update to "3 commands" and v1.2.0
 
-```markdown
+#### `README.md` (330 lines)
+**Current state**: Already updated with 3 commands, direction usage section, updated workflows, 20 guard checks
+**Changes needed**:
+- **Add Anti-Vibe Coding to Philosophy section** — Reframe the philosophy around this concept. The current quote "AI amplified the one skill which I ignored: developing taste" is good but needs the anti-vibe coding framing: the plugin is the antidote to vibe-coded UIs
+- **Add Golden Ratio mention** — In the preset details or a design principles section, mention golden ratio applications (layout proportions, typescale option)
+- **Add content length best practices** — Brief mention in the "What's Checked" or a new section about what the plugin covers beyond just visual styling
+- **Fix**: Philosophy section could be stronger and more distinctive
+
+#### `PLAN.md`
+**Current state**: The plan you're reading now. Will be removed after implementation is complete.
+
+#### `Design skill resources.zip`
+**Current state**: Exists in repo root
+**Change**: None — source material archive
+
+#### Ebook PDFs (4 files)
+**Current state**: Exist in repo root
+**Change**: None — source material
+
 ---
-name: design-direction
-description: "Choose your project's aesthetic direction. Walks through project type, audience, and goals to recommend the right preset."
-argument-hint: "[optional: project type or reference URL]"
+
+### Plugin Core: `plugins/design-quality/`
+
+#### `.claude-plugin/plugin.json`
+**Current state**: v1.2.0, description says "3 commands, 1 skill, and 3 aesthetic presets", author is SeanSmithDesign
+**Change**: None — already correct
+
+#### `LICENSE`
+**Current state**: MIT, copyright "DT Funding Solutions"
+**Change**: Update copyright to "Sean Smith" to match the plugin author everywhere else
+
 ---
 
-# Design Direction
+### Commands: `plugins/design-quality/commands/`
 
-Guide the user to the right aesthetic preset using the Visual Direction process.
+#### `design-direction.md` (112 lines) — NEW in this iteration
+**Current state**: Already created. Walks through Project Type → Target Audience → Emotional Tone → Reference Sites → Recommendation with Hick's Law, Fitts' Law, color psychology, color scheme types.
+**Changes needed**:
+- **Add Anti-Vibe Coding framing** — The opening should frame why direction matters: "This is the anti-vibe coding step. Instead of letting AI pick defaults, you're making intentional aesthetic choices." The recommendation should reinforce this: "This preset replaces generic AI defaults with [specific aesthetic philosophy]."
+- **Add Golden Ratio** — In the Recommendation section, when relevant, mention golden ratio as a layout principle. For `stripe-vercel` (marketing): "Hero section uses ~62:38 golden ratio split for text:visual." For `apple-notion` (consumer): "Content areas use golden ratio proportions for reading comfort."
+- **Add content structure guidance** — After recommending a preset, include a note about content density expectations: "Dashboard UIs are information-dense. Marketing pages are scannable with short copy blocks."
 
-## Setup
+#### `design-brief.md` (113 lines) — EXPANDED in this iteration
+**Current state**: Already expanded with typescale ratios, color psychology, 60-30-10 distribution, layout grid, responsive notes, page structure, Zeigarnik Effect.
+**Changes needed**:
+- **Add Golden Ratio section** — New section (between Layout and Elevation, or as part of Layout):
+  - Layout proportions: sidebar:content ~38:62
+  - Hero split: text:visual at golden ratio
+  - Available as typescale option: ~1.618 (Golden Section)
+- **Add Content Length & Copy Structure section** — New section (after Page Structure):
+  - Headlines: 6-12 words
+  - Subheadlines: 15-25 words
+  - Body paragraphs: 2-4 sentences, scannable
+  - CTAs: 2-5 words, verb-first
+  - Section principle: one purpose per section
+  - Density note per preset (dashboard = dense, marketing = airy, consumer = moderate)
+- **Add Anti-Vibe Coding opening** — Brief note at the top: "This brief replaces AI defaults with intentional constraints. Every rule below is a deliberate choice, not a fallback."
 
-1. Read CLAUDE.md for existing `## Design Quality` section
-2. Load the preset system overview from the design-quality skill
+#### `design-review.md` (91 lines) — MINOR UPDATE in this iteration
+**Current state**: Already updated suggestions line to include Hick's Law and responsive headings.
+**Changes needed**:
+- **Add content/copy checks to Phase 2 scoring** — Under Hierarchy category, mention narrative structure and copy length as part of the score. "Does copy follow headline → subheadline → body → CTA structure?"
+- **Add golden ratio mention** — In Phase 2 Hierarchy scoring: "Layout proportions feel balanced (golden ratio or intentional deviation)"
 
-## Execution
+---
 
-### If `## Design Quality` section already exists:
-Show the current preset, its philosophy, and ask if they want to change it.
+### Skill: `plugins/design-quality/skills/design-quality/`
 
-### If no config exists, walk through:
+#### `SKILL.md` (149 lines)
+**Current state**: Already updated with 3 commands in Related Skills, 2 new proactive triggers for `/design-direction`, updated workflow integration.
+**Changes needed**:
+- **Anti-Vibe Coding philosophy** — Replace or expand the opening line "Taste is the bottleneck, not execution" with anti-vibe coding framing. Something like: "Taste is the bottleneck, not execution. Vibe-coded UIs default to generic aesthetics. This skill captures intentional design decisions so every AI-generated component inherits them automatically — the antidote to vibe coding."
+- **Fix stale path** — Step 1 still references `~/.claude/skills/design/design-quality/presets/<name>.md`. This is the old standalone skill path. Should reference the plugin path or be generic: "Load the preset from the plugin's `presets/<name>.md`."
+- **Fix version in frontmatter** — Still says `version: 1.1.0`, should be `1.2.0`
+- **Golden Ratio in preset system** — Add a note in the Custom Presets section that presets can specify golden ratio proportions for layout
 
-**1. Project Type**
-Ask: "What are you building?"
-- SaaS dashboard / admin panel / dev tool → leans linear-mercury
-- Marketing site / landing page / portfolio → leans stripe-vercel
-- Consumer app / content tool / note-taking → leans apple-notion
+---
 
-**2. Target Audience (ICP)**
-Ask: "Who is the primary user?"
-- Technical/professional users who value efficiency → linear-mercury
-- Prospects/visitors who need to be impressed and trust the brand → stripe-vercel
-- Everyday users who want simplicity and calm → apple-notion
+### Presets: `plugins/design-quality/skills/design-quality/presets/`
 
-**3. Emotional Tone**
-Ask: "What should the interface feel like?"
-- Clean, fast, no-nonsense → linear-mercury
-- Premium, polished, confident → stripe-vercel
-- Simple, calm, invisible → apple-notion
+All 3 presets already have typescale ratios added from this iteration.
 
-**4. Reference Sites** (optional)
-If user provides URLs or CLAUDE.md has Reference URLs, analyze them for:
-- Color density (minimal vs rich)
-- Typography confidence (subtle vs bold)
-- Elevation approach (flat vs layered)
-- Motion style (functional vs choreographed)
+#### `linear-mercury.md` (176 lines)
+**Current state**: Complete preset with TOC, typescale ~1.25.
+**Changes needed**:
+- **Golden Ratio note** — In Spacing or a new Layout section: "Sidebar:content layouts follow ~38:62 golden ratio proportion."
+- **Content density note** — Brief note: "This preset supports high information density. Copy is concise: labels over sentences, data over descriptions."
 
-**5. Recommend a Preset**
-Based on answers, recommend a preset with:
-- 1-2 sentence rationale linking project type + audience + tone to preset philosophy
-- Color psychology note: why the preset's accent approach fits (e.g., "Copper signals warmth and trust for financial products")
-- Color scheme type: monochromatic (linear-mercury, apple-notion) or complementary (stripe-vercel)
-- Key Hick's Law or Fitts' Law note if relevant (e.g., "Dashboard UI benefits from Hick's Law reduction — linear-mercury's minimal aesthetic reduces decision fatigue")
-- For marketing sites: mention the proven section structure (Hero → Social Proof → Features → Testimonials → CTA)
+#### `stripe-vercel.md` (161 lines)
+**Current state**: Complete preset with TOC, typescale ~1.333.
+**Changes needed**:
+- **Golden Ratio as typescale option** — Note that 1.618 (Golden Section) is available for dramatic hero typography: "For impactful hero sections, the golden ratio typescale (~1.618) can replace the default 1.333."
+- **Golden Ratio in layout** — "Hero sections use ~62:38 golden ratio split for text:visual composition."
+- **Content length guidance** — "Headlines: 6-12 words, front-load value. Subheadlines: 15-25 words. CTAs: 2-5 words, verb-first. Body: short paragraphs (2-4 sentences), scannable."
 
-If close call between two presets, show side-by-side comparison table.
+#### `apple-notion.md` (178 lines)
+**Current state**: Complete preset with TOC, typescale ~1.25.
+**Changes needed**:
+- **Golden Ratio in content area** — "Content areas use golden ratio proportions for optimal reading comfort. Max-width containers at ~65ch (the golden ratio of a standard line length)."
+- **Content length guidance** — "Copy is minimal. Headlines are statements, not descriptions. Body text earns every word. If a sentence doesn't serve the user, delete it."
 
-### If argument provided:
-Treat as project type or URL reference and skip directly to recommendation.
+---
 
-## Output
+### References: `plugins/design-quality/skills/design-quality/references/`
 
-- Preset recommendation with rationale
-- Comparison table if close call
-- Offer to update CLAUDE.md with chosen preset + any reference URLs
-- Next step: "Run `/design-brief` to generate detailed style constraints."
-```
+#### `guard-checks.md` (211 lines, 20 checks)
+**Current state**: Already updated with #19 (Hick's Law choice overload) and #20 (responsive heading sizes), TOC updated, decision tree updated.
+**Changes needed**:
+- **Add content/copy check** — New Suggestion #21: "AI-default copy patterns" — Look for: generic marketing copy ("Unlock the power of...", "Revolutionize your..."), em dashes (already #7 but this is broader), excessively long headlines, missing CTAs. This is the anti-vibe coding check for content.
+- **Add golden ratio layout check** — New Suggestion #22: "Layout proportion balance" — Look for: Hero sections with no clear text:visual ratio. Sidebar layouts with equal-width columns instead of ~38:62 proportion. This is a judgment check.
+- **Update TOC and decision tree** for #21 and #22
 
-### Step 2: Update `/design-brief` with ebook depth
+#### `review-rubric.md` (228 lines, 6 categories)
+**Current state**: Already updated with Fitts' Law in Hierarchy, Hick's Law in Hierarchy violations, Zeigarnik Effect in Polish.
+**Changes needed**:
+- **Add content quality to Hierarchy** — New pass criteria: "Copy follows appropriate length conventions (headlines 6-12 words, CTAs 2-5 words, body scannable)"
+- **Add golden ratio to Hierarchy** — New pass criteria: "Layout proportions are intentional (golden ratio or deliberate deviation)"
+- **Add anti-vibe coding check to Typography** — New violation: "Generic AI copy patterns" | Suggestion | "Unlock the power of..." headline with no specificity
+- **Potentially add a 7th category: Content/Copy** — OR fold content quality into Hierarchy. Need to decide: adding a 7th category changes the scoring math (6 x ~17 = ~100 vs 7 x ~14 = ~100). Keeping at 6 categories and folding into Hierarchy is simpler.
 
-**File:** `plugins/design-quality/commands/design-brief.md`
+---
 
-Changes:
-- Fix setup step 2 (remove old standalone skill path)
-- Add "If you haven't chosen a preset yet, run `/design-direction` first."
-- Add **Typescale** section to output (ratio + 5 typographic levels)
-- Add **Color Psychology** note to Color section
-- Add **60-30-10 Distribution** with preset-specific ratios to Color section
-- Add **Layout Grid** section (12-column, responsive breakpoints, container widths)
-- Add **Page Narrative** section for marketing presets (Problem → Solution → Proof → CTA)
-- Add **Responsive** notes (heading scaling on mobile)
-- Add **Gradient Guidance** for stripe-vercel
-- Add **Progress Indicators** note for multi-step flows (Zeigarnik Effect)
+### Test Project: `test-project/`
 
-Updated output structure:
-```markdown
-## Style Brief (Preset: [name])
+#### `CLAUDE.md`
+**Current state**: Updated to reference `/design-direction` flow.
+**Change**: None needed
 
-### Typography
-[Preset rules]
-**Typescale:** [ratio] (e.g., 1.25 Major Third)
-**Levels:** Display → Heading → Subheading → Body → Caption
-**Responsive:** Headings scale down 1-2 steps on mobile. Body stays text-base.
+#### `REVIEW.md` (165 lines)
+**Current state**: Already rebuilt with full direction → brief → build → review → fix → re-review flow. Shows 41→94 score improvement.
+**Changes needed**:
+- **Update guard check count** — Currently says "Phase 1: Guard (20 checks)" — will need to say 22 if we add #21 and #22
+- **Add examples of new checks** — Show #21 (AI-default copy) and #22 (golden ratio layout) in the before/after
 
-### Color
-[Preset rules]
-**Psychology:** [Why this accent works for the project]
-**Distribution:** [60-30-10 with preset-specific ratios]
-**Gradients:** [If stripe-vercel: 2-3 stops, adjacent on color wheel]
+#### `components/weather-dashboard-before.tsx`
+**Current state**: Intentional violations version (hardcoded colors, off-grid, no aria-labels, etc.)
+**Changes needed**:
+- **Add AI-default copy violation** — Use generic copy like "Unlock your weather insights" or em-dash-heavy descriptions
+- **Add layout proportion violation** — Equal-width columns instead of golden ratio proportion
 
-### Spacing
-[Preset rules]
+#### `components/weather-dashboard.tsx` (230 lines)
+**Current state**: Clean version passing all checks at 94/100.
+**Changes needed**:
+- **Fix copy to demonstrate good content** — Short, specific labels. No generic phrases.
+- **Add golden ratio proportion** — If applicable to the dashboard layout
 
-### Layout
-**Grid:** 12-column, [gap] gutters, max-w-7xl container
-**Responsive:** Cards 3→2→1 col at lg→md→sm
-**Breakpoints:** sm:640 / md:768 / lg:1024 / xl:1280
+#### `app/` (empty directory)
+**Current state**: Empty
+**Change**: None — placeholder for Next.js app dir
 
-### Elevation
-[Preset rules]
+---
 
-### Motion
-[Preset rules]
+## New Concepts: Detail
 
-### Component Patterns
-[Preset patterns]
-**Multi-step flows:** Progress indicator (Zeigarnik Effect)
+### Anti-Vibe Coding (thread throughout)
 
-### Page Structure (marketing presets only)
-Hero → Social Proof → Features/Benefits → Testimonials → CTA
+This isn't a single file change — it's a philosophical thread woven through:
 
-### Do / Don't
-[Code examples from preset]
-```
+| File | How It Appears |
+|------|---------------|
+| `SKILL.md` opening | "The antidote to vibe coding" framing |
+| `design-direction.md` | Why choosing direction matters vs. accepting defaults |
+| `design-brief.md` | "These are intentional constraints, not AI fallbacks" |
+| `guard-checks.md` #21 | Catch AI-default copy patterns |
+| `review-rubric.md` | Content quality as part of scoring |
+| `README.md` Philosophy | Position the plugin as anti-vibe coding tool |
 
-### Step 3: Add 2 new guard checks
+### Golden Ratio (targeted additions)
 
-**File:** `plugins/design-quality/skills/design-quality/references/guard-checks.md`
+| File | How It Appears |
+|------|---------------|
+| `design-direction.md` | Mention in recommendation for layout-heavy projects |
+| `design-brief.md` | New layout proportions section + typescale option |
+| `stripe-vercel.md` | Hero split ratio, optional 1.618 typescale |
+| `apple-notion.md` | Content area proportions, ~65ch line length |
+| `linear-mercury.md` | Sidebar:content ratio |
+| `guard-checks.md` #22 | Layout proportion balance check |
+| `review-rubric.md` | Hierarchy pass criteria |
 
-Add to Judgment Checks section:
+### Content Length & Structure (new dimension)
 
-```markdown
-### 19. Choice Overload (Hick's Law)
-**Severity:** Suggestion
-**Look for:** More than 7 ungrouped equal-weight options (buttons, cards, nav items) in a single section
-**Fix:** Group into categories, use visual hierarchy to reduce cognitive load, or paginate
-```
+| File | How It Appears |
+|------|---------------|
+| `design-brief.md` | New "Content & Copy" section with length rules per preset |
+| `design-direction.md` | Content density note in recommendation |
+| `stripe-vercel.md` | Marketing copy best practices |
+| `apple-notion.md` | Minimal copy philosophy |
+| `linear-mercury.md` | Data-first, labels over sentences |
+| `guard-checks.md` #21 | AI-default copy pattern detection |
+| `review-rubric.md` | Copy quality folded into Hierarchy scoring |
 
-```markdown
-### 20. Responsive Heading Sizes
-**Severity:** Suggestion
-**Look for:** Large headings (text-3xl+) with no responsive variants (no `md:text-*` or `lg:text-*`)
-**Fix:** Add responsive sizing: `text-2xl md:text-3xl lg:text-4xl`
-```
+---
 
-Update TOC and Quick Decision Tree to include #19 and #20.
+## Implementation Order
 
-### Step 4: Update review rubric
-
-**File:** `plugins/design-quality/skills/design-quality/references/review-rubric.md`
-
-Add to **Hierarchy** Pass Criteria:
-- `[ ] Primary CTA is the largest interactive target in its section (Fitts' Law)`
-
-Add to **Hierarchy** Common Violations:
-| Too many equal-weight choices | Suggestion | 8 navigation items with identical styling (Hick's Law) |
-
-Add to **Polish** Pass Criteria:
-- `[ ] Multi-step flows have progress indicators (Zeigarnik Effect)`
-
-Add to **Polish** Common Violations:
-| Missing progress indicator | Suggestion | 4-step checkout with no visual progress |
-
-### Step 5: Add typescale ratios to presets
-
-**Files:** All 3 preset files
-
-Add to each preset's Typography section, after the heading hierarchy:
-
-- **linear-mercury:** `**Typescale:** ~1.25 (Major Third) — compact, functional rhythm`
-- **stripe-vercel:** `**Typescale:** ~1.333 (Perfect Fourth) — confident, generous spacing between levels`
-- **apple-notion:** `**Typescale:** ~1.25 (Major Third) — subtle, understated rhythm`
-
-### Step 6: Update SKILL.md
-
-**File:** `plugins/design-quality/skills/design-quality/SKILL.md`
-
-Changes:
-- Add `/design-direction` to Related Skills table
-- Add 2 proactive triggers:
-
-| You Detect | Recommend | How to Say It |
-|------------|-----------|---------------|
-| New project with no `## Design Quality` in CLAUDE.md | `/design-direction` | "No design preset configured. Run `/design-direction` to choose an aesthetic direction." |
-| User asks "what style should I use?" or discusses aesthetic options | `/design-direction` | "Run `/design-direction` to explore preset options for your project." |
-
-- Update Workflow Integration table to include `/design-direction` at brainstorm stage
-
-### Step 7: Update README.md
-
-- Command table: 2 → 3 commands, add `/design-direction`
-- Add usage section for `/design-direction` (when to use, what it does)
-- Update Full Pipeline diagram: add `/design-direction` before `/design-brief`
-- Update Minimal Pipeline: `direction → brief → code → review`
-- Update "Without Compound Engineering" section to show 3 commands
-
-### Step 8: Bump version
-
-- `plugin.json` → version `1.2.0`
-- Update description: "3 commands, 1 skill, and 3 aesthetic presets"
-
-### Step 9: Rebuild test project
-
-Replace current test project with a real end-to-end flow:
-
-1. **test-project/CLAUDE.md** — Start with no Design Quality section
-2. Document `/design-direction` → choose linear-mercury for a weather dashboard
-3. Document `/design-brief` → generate constraints
-4. **test-project/components/weather-dashboard-before.tsx** — Intentional violations:
-   - Hardcoded hex colors (`#3B82F6`, `text-white`)
-   - Off-grid spacing (`p-5`, `gap-3.5`)
-   - Missing aria-labels on icon buttons
-   - No transitions on hover states
-   - Em dashes in copy
-   - Uniform `text-white` on dark backgrounds
-   - No responsive heading sizes
-   - 8+ ungrouped nav items
-5. Document `/design-review` → guard findings + score (~45-55)
-6. **test-project/components/weather-dashboard.tsx** — Fixed version (90+)
-7. **test-project/REVIEW.md** — Full documented run with before/after
+1. Update `SKILL.md` — anti-vibe coding philosophy, fix stale path, fix version
+2. Update `design-direction.md` — anti-vibe framing, golden ratio, content density
+3. Update `design-brief.md` — golden ratio section, content/copy section, anti-vibe opening
+4. Update all 3 presets — golden ratio notes, content length guidance per preset
+5. Update `guard-checks.md` — add #21 (AI-default copy) and #22 (golden ratio layout)
+6. Update `review-rubric.md` — content quality and golden ratio in Hierarchy
+7. Update `design-review.md` — content/copy and golden ratio mentions in scoring
+8. Update `README.md` — anti-vibe coding philosophy, golden ratio, content mentions
+9. Fix root `.claude-plugin/plugin.json` — sync version, fix author URL
+10. Fix `.claude-plugin/marketplace.json` — sync version, fix description
+11. Fix `LICENSE` — update copyright holder name
+12. Update test project — new checks in before/after, updated REVIEW.md
+13. Commit and push
 
 ---
 
@@ -388,45 +270,26 @@ Replace current test project with a real end-to-end flow:
 
 | File | Current Lines | After Changes | Status |
 |------|--------------|---------------|--------|
-| `SKILL.md` | 146 | ~160 | Safe (limit 500) |
-| `design-direction.md` (new) | 0 | ~80 | New command file |
-| `design-brief.md` | 66 | ~90 | Expanded with ebook depth |
-| `design-review.md` | 91 | 91 | No change |
-| `guard-checks.md` | 193 | ~210 | +2 checks |
-| `review-rubric.md` | 222 | ~230 | +4 criteria |
-| `linear-mercury.md` | 174 | ~176 | +typescale line |
-| `stripe-vercel.md` | 159 | ~161 | +typescale line |
-| `apple-notion.md` | 176 | ~178 | +typescale line |
-| `README.md` | 308 | ~350 | +direction command |
-| `plugin.json` | 23 | 23 | Version bump only |
+| `SKILL.md` | 149 | ~155 | Safe (limit 500) |
+| `design-direction.md` | 112 | ~125 | Safe |
+| `design-brief.md` | 113 | ~135 | Safe |
+| `design-review.md` | 91 | ~95 | Safe |
+| `guard-checks.md` | 211 | ~235 | Has TOC (good) |
+| `review-rubric.md` | 228 | ~240 | Has TOC (good) |
+| `linear-mercury.md` | 176 | ~185 | Has TOC (good) |
+| `stripe-vercel.md` | 161 | ~175 | Has TOC (good) |
+| `apple-notion.md` | 178 | ~190 | Has TOC (good) |
+| `README.md` | 330 | ~350 | Documentation file |
 
 ---
 
-## Files Changed
+## Summary of Changes by Type
 
-| File | Change | Ebook Source |
-|------|--------|-------------|
-| `commands/design-direction.md` | **NEW** — Design direction command | Part 3 Visual Direction, ICP, Discovery; Part 2 psychology; Part 4 color psychology/schemes |
-| `commands/design-brief.md` | Expand with typescale, color psychology, 60-30-10, layout grid, page narrative, responsive notes | Part 4 typography/colors/grids/landing page; Part 3 storytelling; Part 2 Zeigarnik |
-| `skills/design-quality/SKILL.md` | Add direction to Related Skills + Proactive Recommendations | — |
-| `references/guard-checks.md` | +2 checks: choice overload (Hick's Law), responsive headings | Part 2 Hick's Law; Part 4 responsive typography |
-| `references/review-rubric.md` | +Fitts' Law in Hierarchy, +progress indicators in Polish | Part 2 Fitts' Law, Zeigarnik Effect |
-| `presets/linear-mercury.md` | +typescale ratio | Part 4 typescale |
-| `presets/stripe-vercel.md` | +typescale ratio | Part 4 typescale |
-| `presets/apple-notion.md` | +typescale ratio | Part 4 typescale |
-| `README.md` | Add direction command, update workflows | — |
-| `.claude-plugin/plugin.json` | Version 1.2.0 | — |
-| `test-project/*` | Full end-to-end flow rebuild | — |
+**Anti-Vibe Coding:** 6 files (SKILL.md, direction, brief, guard-checks, rubric, README)
+**Golden Ratio:** 7 files (direction, brief, 3 presets, guard-checks, rubric)
+**Content Length & Structure:** 7 files (direction, brief, 3 presets, guard-checks, rubric)
+**Bug Fixes:** 4 files (root plugin.json, marketplace.json, LICENSE, SKILL.md path/version)
+**Test Project Updates:** 3 files (before.tsx, dashboard.tsx, REVIEW.md)
 
-## Implementation Order
-
-1. Create `design-direction.md` command (ebook Visual Direction + ICP + psychology)
-2. Expand `design-brief.md` (ebook typography/color/layout depth)
-3. Add 2 guard checks (Hick's Law + responsive headings)
-4. Update review rubric (Fitts' Law + Zeigarnik Effect criteria)
-5. Add typescale ratios to all 3 presets
-6. Update `SKILL.md` (direction triggers + workflow)
-7. Update `README.md` (3 commands + updated workflows)
-8. Bump `plugin.json` to v1.2.0
-9. Rebuild test project with full end-to-end flow
-10. Commit and push
+**Total files changed:** 16 of 20 files in the project
+**No changes:** design-review.md (minor only), ebook PDFs, Design skill resources.zip, test-project/CLAUDE.md
