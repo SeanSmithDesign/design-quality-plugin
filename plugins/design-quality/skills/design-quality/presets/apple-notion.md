@@ -27,6 +27,7 @@ Study: How these apps make complex information feel simple. How whitespace creat
 - **Heading font:** System sans or SF-style — Inter, SF Pro, or system-ui. The font should be invisible — you notice the words, not the typeface.
 - **Body font:** Same family as headings. Consistency over variety.
 - **Display:** Moderate sizing, heavy weight contrast. A 48px bold heading next to 16px regular body creates hierarchy through weight, not scale.
+- **Typescale:** ~1.25 (Major Third) — subtle, understated rhythm. Size differences are gentle; weight does the heavy lifting.
 - **Heading hierarchy:**
   - H1: text-3xl font-bold tracking-tight
   - H2: text-2xl font-semibold

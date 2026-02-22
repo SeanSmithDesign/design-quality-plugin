@@ -27,6 +27,7 @@ Study: How these apps use whitespace to create hierarchy without borders. How ty
 - **Heading font:** Inter, weights 600 (semibold) for section headings, 700 (bold) for hero only
 - **Body font:** Inter, weight 400 (regular), 500 (medium) for emphasis
 - **Display:** Hero headlines may use a serif accent (e.g., Instrument Serif italic) for ONE phrase only — not entire headings
+- **Typescale:** ~1.25 (Major Third) — compact, functional rhythm. Each heading level is ~1.25x the next.
 - **Heading hierarchy:**
   - H1: text-4xl font-bold tracking-tight (hero only)
   - H2: text-2xl font-semibold tracking-tight

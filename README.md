@@ -10,10 +10,11 @@ claude plugin add https://github.com/SeanSmithDesign/design-quality-plugin
 
 ## What's Included
 
-### Commands (2)
+### Commands (3)
 
 | Command | Description |
 |---------|-------------|
+| `/design-direction` | Choose your aesthetic direction. Walks through project type, audience, and goals to recommend a preset |
 | `/design-brief` | Generate a style brief from the active preset before coding |
 | `/design-review` | Full pipeline: guard + score + fix. Catches violations, rates 6 categories (0-100), and offers to auto-fix |
 
@@ -78,12 +79,28 @@ When the design-quality skill is active, Claude proactively recommends the right
 
 | Context | What Claude Suggests | Why |
 |---------|---------------------|-----|
+| New project with no design preset configured | "Run `/design-direction` to choose an aesthetic direction" | Sets the foundation |
 | You start planning a UI feature | "Run `/design-brief` to set style constraints before coding" | Prevents design drift |
 | You ask Claude to build/modify a component | Brief reminder of active preset rules inline | Keeps code on-brand |
 | You finish implementing UI changes | "Run `/design-review` to score quality and auto-fix issues" | Catches violations before PR |
 | You ask for a code review on UI | Includes design quality scoring in the review | Holistic feedback |
 
 You don't need to memorize the workflow — Claude will suggest the next step.
+
+### First time: Choose your aesthetic direction
+
+```
+/design-direction
+```
+
+Walks you through three questions — project type, target audience, and emotional tone — then recommends one of the 3 built-in presets with a rationale grounded in design psychology (Fitts' Law, Hick's Law) and color theory.
+
+Skip the walkthrough if you already know:
+```
+/design-direction SaaS dashboard
+```
+
+After choosing, it offers to update your `CLAUDE.md` with the preset configuration.
 
 ### Before coding: Generate a style brief
 
@@ -227,7 +244,7 @@ You choose: fix all, fix errors only, or handle manually.
 
 ## Guard Checks
 
-The full guard checklist covers 18 items in three tiers:
+The full guard checklist covers 20 items in three tiers:
 
 ### Errors (must fix)
 1. No hardcoded colors (hex, rgb, platform color literals)
@@ -252,6 +269,8 @@ The full guard checklist covers 18 items in three tiers:
 16. Hover/press state presence
 17. Empty/loading/error states
 18. Semantic markup usage
+19. Choice overload (Hick's Law — too many ungrouped options)
+20. Responsive heading sizes
 
 ## Philosophy
 
@@ -269,6 +288,8 @@ Designed to complement the [Compound Engineering Plugin](https://github.com/Ever
 
 ```
 /workflows:brainstorm     <- explore what to build
+       |
+/design-direction         <- choose aesthetic direction
        |
 /workflows:plan           <- plan implementation
        |
@@ -288,7 +309,7 @@ Designed to complement the [Compound Engineering Plugin](https://github.com/Ever
 For smaller tasks, the essentials:
 
 ```
-/design-brief -> code -> /design-review
+/design-direction -> /design-brief -> code -> /design-review
 ```
 
 ### Without Compound Engineering
@@ -296,6 +317,7 @@ For smaller tasks, the essentials:
 This plugin works standalone. Use the three commands directly:
 
 ```
+/design-direction                      <- choose aesthetic (once per project)
 /design-brief                          <- before coding
 ... write code ...
 /design-review src/components/         <- after coding

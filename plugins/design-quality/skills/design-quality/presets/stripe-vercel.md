@@ -27,6 +27,7 @@ Study: How these apps use layered depth (shadows + gradients + borders) together
 - **Heading font:** A distinctive display font — GT Walsheim, Satoshi, or Geist. NOT Inter or system fonts. The heading font is a brand signature.
 - **Body font:** Clean sans-serif — Geist, Inter, or system-ui. Prioritize legibility.
 - **Display:** Large and confident. Hero text can be 64-80px. Let it breathe.
+- **Typescale:** ~1.333 (Perfect Fourth) — confident, generous spacing between levels. Each step is ~1.333x the next.
 - **Heading hierarchy:**
   - H1: text-5xl or text-6xl, font-bold, tracking-tight
   - H2: text-3xl font-semibold tracking-tight

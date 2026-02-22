@@ -1,4 +1,4 @@
-# Guard Checks
+# Guard Checks (20)
 
 Quick-reference checklist for Guard mode. Before writing any UI code, self-check against these rules. Ordered by detection ease (static/obvious first, judgment calls last).
 
@@ -7,7 +7,7 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 ## Contents
 - [Static Checks](#static-checks) — #1-7
 - [Pattern Checks](#pattern-checks) — #8-13
-- [Judgment Checks](#judgment-checks) — #14-18
+- [Judgment Checks](#judgment-checks) — #14-20
 - [Quick Decision Tree](#quick-decision-tree)
 
 ---
@@ -171,6 +171,21 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 **Look for:** `<div>` used where semantic elements would be more appropriate
 **Fix:** Use `<section>`, `<nav>`, `<main>`, `<article>`, `<header>`, `<footer>` as appropriate
 
+### 19. Choice Overload (Hick's Law)
+**Severity:** Suggestion
+**Look for:** More than 7 ungrouped equal-weight options (buttons, cards, nav items, list choices) in a single section with identical visual treatment
+**Why:** Hick's Law — more choices = longer decision time. Ungrouped options create cognitive overload.
+**Fix:** Group into categories with visual separators, use hierarchy to differentiate primary from secondary options, or paginate
+
+### 20. Responsive Heading Sizes
+**Severity:** Suggestion
+**Look for:** Large headings (`text-3xl` or above) with no responsive variants (no `sm:text-*`, `md:text-*`, or `lg:text-*`)
+**Fix:** Add responsive sizing so headings scale down on mobile
+```tsx
+// Bad:  <h1 className="text-5xl font-bold">Hero</h1>
+// Good: <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">Hero</h1>
+```
+
 ---
 
 ## Quick Decision Tree
@@ -189,5 +204,7 @@ Writing a component?
 ├─ Dark bg with uniform text color? → WARNING. Vary opacity.
 ├─ No transition on hover? → WARNING. Add transition.
 ├─ Missing hover state? → SUGGESTION.
+├─ 7+ ungrouped equal-weight options? → SUGGESTION. Group or reduce (Hick's Law).
+├─ Large heading with no responsive variants? → SUGGESTION. Add breakpoint sizes.
 └─ All clear? → Write the code.
 ```

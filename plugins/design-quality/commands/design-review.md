@@ -35,7 +35,7 @@ Load `references/guard-checks.md` and run through the checklist:
 
 - **Errors** — Hardcoded colors, wrong fonts, missing accessible names, em dashes in copy
 - **Warnings** — Off-grid spacing, missing transitions, inconsistent elevation, line-height mismatches, flat dark-bg text hierarchy
-- **Suggestions** — Missing hover states, empty/loading states, semantic HTML
+- **Suggestions** — Missing hover states, empty/loading states, semantic HTML, choice overload (Hick's Law), non-responsive headings
 
 ### Phase 2: Score (rate quality)
 

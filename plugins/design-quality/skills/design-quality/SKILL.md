@@ -26,14 +26,15 @@ Taste is the bottleneck, not execution. This skill captures project-specific aes
 
 ## Related Skills
 
-This is the core engine. Two standalone skills handle explicit actions:
+This is the core engine. Three commands handle explicit actions:
 
-| Skill | When | Invoke With |
-|-------|------|-------------|
+| Command | When | Invoke With |
+|---------|------|-------------|
+| `design-direction` | Before choosing a preset | `/design-direction` or "what style should I use?" |
 | `design-brief` | Before coding | `/design-brief` or "generate a style brief" |
 | `design-review` | After coding | `/design-review` or "review the design quality" |
 
-`/design-review` combines guard checks + scoring + auto-fix in one pass.
+`/design-direction` walks through project type, audience, and tone to recommend a preset. `/design-review` combines guard checks + scoring + auto-fix in one pass.
 
 ## Step 1: Load Project Config
 
@@ -91,6 +92,8 @@ This is automatic — no user action needed. Use `/design-review` for the explic
 
 | You Detect | Recommend | How to Say It |
 |------------|-----------|---------------|
+| New project with no `## Design Quality` in CLAUDE.md | `/design-direction` | "No design preset configured. Run `/design-direction` to choose an aesthetic direction." |
+| User asks "what style should I use?" or discusses aesthetic options | `/design-direction` | "Run `/design-direction` to explore preset options for your project." |
 | User is planning a UI feature or starting `/workflows:plan` for UI | `/design-brief` | "Before we start coding, run `/design-brief` to lock in style constraints from the [preset] preset." |
 | User asks to build or modify a UI component | Apply preset rules inline | Don't interrupt — guard silently and flag violations naturally. |
 | User finishes implementing UI changes, wraps up `/workflows:work`, or is about to commit UI files | `/design-review` | "Run `/design-review [path]` to catch violations, score quality, and auto-fix before committing." |
@@ -137,7 +140,7 @@ Overrides the project default until the session ends.
 
 | Workflow Stage | Design Quality Role |
 |----------------|---------------------|
-| `/workflows:brainstorm` | Suggest aesthetic direction based on project type |
+| `/workflows:brainstorm` | Recommend `/design-direction` to choose aesthetic |
 | `/workflows:plan` | Recommend `/design-brief` for UI tasks |
 | `/workflows:work` | Inline guard active — self-check before writing UI code |
 | `/workflows:review` | Include design scoring when UI files in diff |

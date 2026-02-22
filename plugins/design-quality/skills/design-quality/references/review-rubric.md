@@ -35,6 +35,7 @@ Does the interface guide the eye? Can you identify the most important element in
 - [ ] Semantic HTML used (`h1`-`h6`, `main`, `nav`, `section`, `article`)
 - [ ] Visual weight matches content importance
 - [ ] No two elements compete for primary attention
+- [ ] Primary CTA is the largest interactive target in its section (Fitts' Law — larger targets are faster to reach)
 - [ ] Page follows a narrative flow (marketing: Problem → Solution → Proof → CTA; dashboards: Task → Content → Actions)
 
 ### Common Violations
@@ -43,6 +44,8 @@ Does the interface guide the eye? Can you identify the most important element in
 | Multiple elements same visual weight | Warning | Two `text-2xl font-bold` headings side-by-side |
 | Heading levels skipped | Warning | H1 followed directly by H4 |
 | No clear CTA | Error | Page section with no primary action |
+| CTA not dominant target | Warning | Secondary button is same size as primary CTA (Fitts' Law) |
+| Too many ungrouped choices | Suggestion | 8 nav items with identical styling (Hick's Law) |
 | Non-semantic HTML | Warning | `<div>` used instead of `<section>` or `<nav>` |
 
 ---
@@ -156,6 +159,7 @@ Does the interface feel finished?
 - [ ] Empty states for data-dependent components
 - [ ] Error states for forms and data fetching
 - [ ] Consistent border-radius across same-level elements
+- [ ] Multi-step flows have progress indicators (Zeigarnik Effect — users stay engaged with visible progress)
 
 ### Common Violations
 | Violation | Severity | Example |
@@ -166,6 +170,7 @@ Does the interface feel finished?
 | Missing loading state | Warning | Button submits with no loading indicator |
 | Missing empty state | Suggestion | "No data" shown as blank area |
 | Missing error state | Warning | Form submission fails silently |
+| Missing progress indicator | Suggestion | 4-step checkout with no visual progress (Zeigarnik Effect) |
 
 ---
 
