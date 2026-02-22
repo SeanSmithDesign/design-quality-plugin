@@ -41,6 +41,35 @@ Content and copy guidelines:
 - Consistent file structure across all plugin components
 - Ecosystem positioning (complementary to rams, baseline-ui, deslop, web-interface-guidelines)
 
+### 6. Preset Rename — Remove Brand Names
+
+Presets should describe the aesthetic, not reference specific brands. Rename across all files:
+
+| Old Name (Brand) | New Name (Aesthetic) |
+|-------------------|---------------------|
+| `linear-mercury` | `clean-functional` |
+| `stripe-vercel` | `premium-depth` |
+| `apple-notion` | `refined-minimal` |
+
+**Files affected by rename:**
+- Preset filenames: `linear-mercury.md` → `clean-functional.md`, etc.
+- `SKILL.md` — preset table, preset system paths, examples
+- `design-direction.md` — all recommendation tables, comparison tables
+- `design-brief.md` — typescale ratios, 60-30-10 distributions, page structure
+- `design-review.md` — no direct references (uses "active preset")
+- `guard-checks.md` — code examples reference preset names
+- `review-rubric.md` — no direct references
+- `README.md` — preset table, preset details sections, setup examples, workflow text
+- `test-project/CLAUDE.md` — active preset name
+- `test-project/REVIEW.md` — all references to the chosen preset
+- Root `.claude-plugin/plugin.json` — no preset names
+- `plugins/design-quality/.claude-plugin/plugin.json` — no preset names
+
+Each preset file also needs its internal "Reference Apps" section updated. The reference apps (Linear, Mercury, Stripe, Vercel, Apple, Notion) stay as **reference inspiration** but the preset name itself is aesthetic-descriptive:
+- `clean-functional.md` — "Reference Apps: Linear, Mercury, Raycast" (still study these, just not in the name)
+- `premium-depth.md` — "Reference Apps: Stripe, Vercel, Resend"
+- `refined-minimal.md` — "Reference Apps: Apple Notes, Notion, Things 3"
+
 ---
 
 ## File-by-File Audit and Changes
@@ -137,22 +166,31 @@ Content and copy guidelines:
 
 All 3 presets already have typescale ratios added from this iteration.
 
-#### `linear-mercury.md` (176 lines)
-**Current state**: Complete preset with TOC, typescale ~1.25.
+#### `linear-mercury.md` → RENAME to `clean-functional.md` (176 lines)
+**Current state**: Complete preset with TOC, typescale ~1.25. Title says "Preset: Linear / Mercury".
 **Changes needed**:
+- **Rename file** — `linear-mercury.md` → `clean-functional.md`
+- **Update title** — "Preset: Linear / Mercury" → "Preset: Clean Functional"
+- **Keep Reference Apps** — Linear, Mercury, Raycast stay as inspirations
 - **Golden Ratio note** — In Spacing or a new Layout section: "Sidebar:content layouts follow ~38:62 golden ratio proportion."
 - **Content density note** — Brief note: "This preset supports high information density. Copy is concise: labels over sentences, data over descriptions."
 
-#### `stripe-vercel.md` (161 lines)
-**Current state**: Complete preset with TOC, typescale ~1.333.
+#### `stripe-vercel.md` → RENAME to `premium-depth.md` (161 lines)
+**Current state**: Complete preset with TOC, typescale ~1.333. Title says "Preset: Stripe / Vercel".
 **Changes needed**:
+- **Rename file** — `stripe-vercel.md` → `premium-depth.md`
+- **Update title** — "Preset: Stripe / Vercel" → "Preset: Premium Depth"
+- **Keep Reference Apps** — Stripe, Vercel, Resend stay as inspirations
 - **Golden Ratio as typescale option** — Note that 1.618 (Golden Section) is available for dramatic hero typography: "For impactful hero sections, the golden ratio typescale (~1.618) can replace the default 1.333."
 - **Golden Ratio in layout** — "Hero sections use ~62:38 golden ratio split for text:visual composition."
 - **Content length guidance** — "Headlines: 6-12 words, front-load value. Subheadlines: 15-25 words. CTAs: 2-5 words, verb-first. Body: short paragraphs (2-4 sentences), scannable."
 
-#### `apple-notion.md` (178 lines)
-**Current state**: Complete preset with TOC, typescale ~1.25.
+#### `apple-notion.md` → RENAME to `refined-minimal.md` (178 lines)
+**Current state**: Complete preset with TOC, typescale ~1.25. Title says "Preset: Apple / Notion".
 **Changes needed**:
+- **Rename file** — `apple-notion.md` → `refined-minimal.md`
+- **Update title** — "Preset: Apple / Notion" → "Preset: Refined Minimal"
+- **Keep Reference Apps** — Apple Notes, Notion, Things 3 stay as inspirations
 - **Golden Ratio in content area** — "Content areas use golden ratio proportions for optimal reading comfort. Max-width containers at ~65ch (the golden ratio of a standard line length)."
 - **Content length guidance** — "Copy is minimal. Headlines are statements, not descriptions. Body text earns every word. If a sentence doesn't serve the user, delete it."
 
@@ -250,19 +288,20 @@ This isn't a single file change — it's a philosophical thread woven through:
 
 ## Implementation Order
 
-1. Update `SKILL.md` — anti-vibe coding philosophy, fix stale path, fix version
-2. Update `design-direction.md` — anti-vibe framing, golden ratio, content density
-3. Update `design-brief.md` — golden ratio section, content/copy section, anti-vibe opening
-4. Update all 3 presets — golden ratio notes, content length guidance per preset
-5. Update `guard-checks.md` — add #21 (AI-default copy) and #22 (golden ratio layout)
-6. Update `review-rubric.md` — content quality and golden ratio in Hierarchy
-7. Update `design-review.md` — content/copy and golden ratio mentions in scoring
-8. Update `README.md` — anti-vibe coding philosophy, golden ratio, content mentions
-9. Fix root `.claude-plugin/plugin.json` — sync version, fix author URL
-10. Fix `.claude-plugin/marketplace.json` — sync version, fix description
-11. Fix `LICENSE` — update copyright holder name
-12. Update test project — new checks in before/after, updated REVIEW.md
-13. Commit and push
+1. **Rename preset files** — `linear-mercury.md` → `clean-functional.md`, `stripe-vercel.md` → `premium-depth.md`, `apple-notion.md` → `refined-minimal.md`. Update titles and internal references in each.
+2. **Update all 3 presets** — golden ratio notes, content length guidance, update titles/references
+3. **Update `SKILL.md`** — anti-vibe coding philosophy, fix stale path, fix version, rename all preset references
+4. **Update `design-direction.md`** — anti-vibe framing, golden ratio, content density, rename all preset references
+5. **Update `design-brief.md`** — golden ratio section, content/copy section, anti-vibe opening, rename all preset references
+6. **Update `guard-checks.md`** — add #21 (AI-default copy) and #22 (golden ratio layout), update any preset name references in code examples
+7. **Update `review-rubric.md`** — content quality and golden ratio in Hierarchy
+8. **Update `design-review.md`** — content/copy and golden ratio mentions in scoring
+9. **Update `README.md`** — anti-vibe coding philosophy, golden ratio, content mentions, rename all preset references throughout
+10. **Fix root `.claude-plugin/plugin.json`** — sync version, fix author URL
+11. **Fix `.claude-plugin/marketplace.json`** — sync version, fix description
+12. **Fix `LICENSE`** — update copyright holder name
+13. **Update test project** — rename preset in CLAUDE.md, update REVIEW.md, new checks in before/after
+14. Commit and push
 
 ---
 
@@ -285,11 +324,12 @@ This isn't a single file change — it's a philosophical thread woven through:
 
 ## Summary of Changes by Type
 
+**Preset Rename:** ~15 files (3 preset files renamed + every file that references preset names)
 **Anti-Vibe Coding:** 6 files (SKILL.md, direction, brief, guard-checks, rubric, README)
 **Golden Ratio:** 7 files (direction, brief, 3 presets, guard-checks, rubric)
 **Content Length & Structure:** 7 files (direction, brief, 3 presets, guard-checks, rubric)
 **Bug Fixes:** 4 files (root plugin.json, marketplace.json, LICENSE, SKILL.md path/version)
-**Test Project Updates:** 3 files (before.tsx, dashboard.tsx, REVIEW.md)
+**Test Project Updates:** 4 files (CLAUDE.md, before.tsx, dashboard.tsx, REVIEW.md)
 
-**Total files changed:** 16 of 20 files in the project
-**No changes:** design-review.md (minor only), ebook PDFs, Design skill resources.zip, test-project/CLAUDE.md
+**Total files changed:** 18 of 20 files in the project
+**No changes:** ebook PDFs, Design skill resources.zip
