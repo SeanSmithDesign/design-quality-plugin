@@ -1,274 +1,199 @@
-# Plugin Iteration Plan
+# Comprehensive Plugin Plan
 
-## Context
+## Current State
 
-Incorporating design principles from the "Web Design Mastery" ebook (Parts 1-4), ecosystem learnings from RAMS/ui-skills, and three user-requested additions into the existing design-quality plugin.
+The plugin (v1.1.0) has all core pieces built:
+- 2 commands (`/design-brief`, `/design-review`)
+- 1 skill (`design-quality`)
+- 3 presets (`linear-mercury`, `stripe-vercel`, `apple-notion`)
+- 2 reference files (`guard-checks.md` with 18 checks, `review-rubric.md` with 6 categories)
+- Plugin manifest, README, LICENSE
 
-## Ecosystem Positioning
+The previous iteration added: TOCs, per-phase loading, ebook principles (line-height, weight hierarchy, 60-30-10, dark bg hierarchy), 3 new guard checks (em dashes, line-height ranges, dark bg text), "When to Break the Rules" section, and ecosystem positioning.
 
-RAMS and ui-skills cover generic best-practices well (WCAG, performance, animation, code slop). Our plugin's unique value is **preset-driven taste enforcement** and **ebook-derived design principles**. This iteration leans into that differentiation rather than duplicating accessibility/performance checks.
+## What's Missing
 
-## Token Budget Constraints
+### 1. No `/design-direction` Command
 
-All changes must respect Anthropic's official skill/plugin guidelines:
+The workflow has a gap. `/design-brief` generates constraints from an *already-chosen* preset. But there's no step for **choosing the right aesthetic direction** in the first place.
 
-| Constraint | Limit | Status |
-|---|---|---|
-| SKILL.md body | Under 500 lines / ~5,000 tokens | Currently 135 lines — safe |
-| Skill description | Under 1,024 characters | Currently ~190 chars — safe |
-| Reference files > 100 lines | Must include a table of contents | guard-checks, review-rubric, all presets need TOCs |
-| Command files | Load references per-phase, not all at once | design-review.md needs restructuring |
-| All content | Concise examples over verbose explanations | Trim wordiness in new additions |
+**Current flow:** User picks a preset (somehow) → `/design-brief` → code → `/design-review`
 
-**Writing principles for all additions:**
-- Challenge each line: "Does Claude already know this?"
-- Prefer a 3-line code example over a 3-paragraph explanation
-- No introductory sentences that just restate the heading
-- If a concept is widely known (WCAG ratios, semantic HTML), reference it, don't explain it
+**Complete flow:** `/design-direction` (choose/define aesthetic) → `/design-brief` (generate constraints) → code → `/design-review` (score + fix)
 
----
+`/design-direction` should:
+- Ask about the project type (SaaS dashboard? marketing site? consumer app?)
+- Ask about the target audience and emotional tone
+- Analyze reference URLs from CLAUDE.md (if provided)
+- Recommend one of the 3 built-in presets with reasoning
+- Or help define a custom preset if none fit
+- Output: a recommendation + rationale, and optionally update CLAUDE.md with the chosen preset
 
-## Changes
-
-### 1. Add Table of Contents to All Reference Files > 100 Lines
-
-**Files:** `references/guard-checks.md`, `references/review-rubric.md`, `presets/linear-mercury.md`, `presets/stripe-vercel.md`, `presets/apple-notion.md`
-
-Add a TOC after the title/intro of each file. Format:
-
-```markdown
-## Contents
-- [Section Name](#section-name)
-- [Section Name](#section-name)
-```
-
-This is an Anthropic requirement for reference files over 100 lines — helps Claude navigate to relevant sections without reading the entire file.
+**File:** `commands/design-direction.md`
 
 ---
 
-### 2. Restructure `/design-review` for Per-Phase Loading
+### 2. Test Project Doesn't Prove the Flow
 
-**File:** `commands/design-review.md`
+The test project has a pre-built component (weather-dashboard.tsx) and a REVIEW.md that documents what the output *should* look like, but was never run through the actual plugin flow. It's documentation of a simulated run.
 
-Current design-review loads ALL references at setup (skill + preset + rubric + guard-checks). Restructure to load per-phase:
+**What a real test should demonstrate:**
+1. Run `/design-direction` → choose preset
+2. Run `/design-brief` → generate constraints from chosen preset
+3. Build a component *from scratch* following the brief (with inline guard catching issues as you go)
+4. Run `/design-review` on the built component → get real scores
+5. Fix issues found → re-score → show improvement
 
-**Before (current):**
+The weather-dashboard.tsx was built "correctly" from the start, so it doesn't demonstrate the review-fix-rescore loop. We need a **before** version with intentional violations and an **after** version showing fixes.
+
+---
+
+### 3. SKILL.md Missing Proactive `/design-direction` Trigger
+
+The Proactive Recommendations table in SKILL.md should include when to recommend `/design-direction`:
+
+| You Detect | Recommend | How to Say It |
+|------------|-----------|---------------|
+| New project with no `## Design Quality` in CLAUDE.md | `/design-direction` | "No design preset configured. Run `/design-direction` to choose an aesthetic direction." |
+| User asks "what style should I use?" or discusses aesthetic options | `/design-direction` | "Run `/design-direction` to explore preset options for your project." |
+
+---
+
+### 4. README Missing `/design-direction`
+
+The README documents the full workflow and command table but doesn't include `/design-direction`. Needs:
+- Add to command table
+- Add to workflow diagrams (Full Pipeline and Minimal Pipeline)
+- Add usage section explaining when and how to use it
+
+---
+
+### 5. plugin.json Version Bump
+
+Adding a new command is a minor feature → bump to v1.2.0.
+
+---
+
+### 6. design-brief.md Needs Small Update
+
+The design-brief.md says to "Load the `design-quality` skill from `.claude/skills/design/design-quality/SKILL.md`" in setup step 2. This path uses the old standalone skill path, not the plugin path. It should reference the skill as part of the plugin, or simply say "the design-quality skill" since it's already in context when invoked via the plugin.
+
+Also, after generating the brief, it should reference the flow: "If you haven't chosen a preset yet, run `/design-direction` first."
+
+---
+
+## Implementation Plan
+
+### Step 1: Create `/design-direction` command
+
+**File:** `plugins/design-quality/commands/design-direction.md`
+
+Structure:
 ```
+---
+name: design-direction
+description: "Choose or define your project's aesthetic direction. Recommends a preset based on project type, audience, and reference sites."
+argument-hint: "[optional: project type or reference URL]"
+---
+
+# Design Direction
+
 ## Setup
-1. Load SKILL.md
-2. Load preset
-3. Load review rubric
-4. Load guard checks
+1. Read CLAUDE.md for existing Design Quality config
+2. Load the design-quality skill
+
+## Execution
+
+### If Design Quality section already exists:
+Show the current preset and ask if they want to change it.
+
+### If no Design Quality section:
+Walk through:
+1. Project type (SaaS/dashboard, marketing/landing, consumer app, other)
+2. Emotional tone (clean/functional, premium/polished, simple/refined)
+3. Reference sites (analyze any URLs from user or CLAUDE.md)
+4. Recommend a preset with rationale
+
+### If argument provided:
+Treat as project type or reference URL and skip to recommendation.
+
+## Output
+- Preset recommendation with 1-2 sentence rationale
+- Side-by-side comparison if close call between presets
+- Offer to update CLAUDE.md with the chosen preset
+- Suggest running /design-brief next
 ```
 
-**After:**
-```
-## Setup
-1. Read CLAUDE.md for active preset
-2. Load the active preset from presets/<name>.md
+### Step 2: Update SKILL.md
 
-## Phase 1: Guard
-Load references/guard-checks.md
-Run guard checks...
+- Add `/design-direction` to the Related Skills table
+- Add to Proactive Recommendations table (new project, no config, aesthetic questions)
+- Update Workflow Integration table
 
-## Phase 2: Score
-Load references/review-rubric.md
-Score categories...
+### Step 3: Update design-brief.md
 
-## Phase 3: Fix
-(No additional files — use findings from phases 1-2)
-```
+- Fix the skill path reference in Setup step 2
+- Add note: "If you haven't chosen a preset yet, run `/design-direction` first."
 
-This means each phase only loads what it needs. The skill itself (SKILL.md) doesn't need to be explicitly loaded by the command — it's already in context if the skill is active, and the command file contains everything needed for execution.
+### Step 4: Update README.md
+
+- Add `/design-direction` to command table
+- Add usage section for `/design-direction`
+- Update workflow diagrams to include the direction step
+
+### Step 5: Rebuild test project end-to-end
+
+Replace the current test project contents with a real flow:
+
+1. **test-project/CLAUDE.md** — Start empty (no Design Quality section)
+2. Run `/design-direction` → document the interaction and preset choice → update CLAUDE.md
+3. Run `/design-brief` → document the generated brief
+4. **test-project/components/weather-dashboard-before.tsx** — Build with *intentional* violations (hardcoded colors, off-grid spacing, missing aria-labels, text-white everywhere, no transitions)
+5. Run `/design-review` → document guard findings + score (should be ~45-55)
+6. Apply fixes → create **test-project/components/weather-dashboard.tsx** (the fixed version)
+7. Re-score → document improvement (should reach 90+)
+8. **test-project/REVIEW.md** — Full documented run with before/after scores
+
+### Step 6: Bump version
+
+- `plugin.json` → version `1.2.0`
+- Update description if needed to mention 3 commands
 
 ---
 
-### 3. New Guard Check: No Em Dashes in Copy
+## Token Budget Check
 
-**File:** `references/guard-checks.md`
-
-Add as Static Check #7 (after Accessible Names, before Pattern Checks):
-
-- **Severity:** Warning
-- **Look for:** Em dashes (`—`) or en dashes (`–`) in string literals and JSX text
-- **Fix:** Replace with comma, period, or restructure
-
-```tsx
-// Bad:  "Our platform — built for developers — ships faster."
-// Good: "Our platform is built for developers. Ship faster."
-```
-
-Add to Quick Decision Tree:
-```
-├─ Contains em dash in copy? → WARNING. Rewrite without dash.
-```
+| File | Current Lines | After Changes | Status |
+|------|--------------|---------------|--------|
+| `SKILL.md` | 146 | ~160 | Safe (limit 500) |
+| `design-direction.md` (new) | 0 | ~60 | New command file |
+| `design-brief.md` | 66 | ~68 | Minor edit |
+| `design-review.md` | 93 | 93 | No change |
+| `README.md` | 308 | ~340 | Minor additions |
+| `plugin.json` | 23 | 23 | Version bump only |
 
 ---
-
-### 4. New Guard Check: Line-Height Ranges
-
-**File:** `references/guard-checks.md`
-
-Add as Pattern Check #11 (after Transition on Interactive States):
-
-- **Severity:** Warning
-- **Look for:** Body text with `leading-tight`/`leading-none`. Headings (32px+) with `leading-loose`/`leading-relaxed`.
-- **Fix:** Body: `leading-normal` to `leading-relaxed` (1.4-1.6x). Headings: `leading-tight` to `leading-snug` (1.1-1.2x).
-
-```tsx
-// Bad:  <p className="text-base leading-tight">Body text</p>
-// Bad:  <h1 className="text-4xl leading-loose">Heading</h1>
-// Good: <p className="text-base leading-normal">Body text</p>
-// Good: <h1 className="text-4xl leading-tight">Heading</h1>
-```
-
----
-
-### 5. New Guard Check: Dark Background Text Hierarchy
-
-**File:** `references/guard-checks.md`
-
-Add as Pattern Check #12 (after Line-Height Ranges):
-
-- **Severity:** Warning
-- **Look for:** On dark backgrounds, all text using identical foreground color/opacity
-- **Fix:** Vary opacity — primary at 100%, secondary at 70%, tertiary at 50%
-
-```tsx
-// Bad:  all children use text-white
-// Good: primary text-white, secondary text-white/70, tertiary text-white/50
-```
-
----
-
-### 6. "When to Break the Rules" Section
-
-**File:** `references/review-rubric.md`
-
-Add after the Score Examples section. Keep it concise — bullet points, no essays.
-
-Content:
-
-#### Typography
-- Display type can break weight/size limits for hero compositions
-- One serif accent phrase in a sans-serif system adds personality (ebook + linear-mercury preset endorse this)
-- Exceeding 3 font weights is acceptable in rich typographic layouts (pricing pages, dashboards)
-
-#### Color
-- Third-party brand colors (Google blue, GitHub black) are exempt from hardcoded-color errors — flag but don't fail
-- 60-30-10 is a guideline. A dark hero at 90/10/0 is fine if hierarchy works
-- Saturated accent on a CTA banner is intentional emphasis, not a violation
-
-#### Spacing
-- Optical alignment (`-1px` nudge) beats grid alignment when visual alignment is off
-- Breaking grid for dramatic effect (hero `py-40` in a `py-32` system) is valid if the visual weight demands it
-
-#### General
-- Breaking one rule to strengthen another is a net positive — weigh the tradeoff
-- Marketing pages and dashboards have different standards — context matters
-
-**Scoring impact:** Intentional rule-breaks that serve the design should be noted as "Intentional deviation — [reason]" rather than penalized.
-
----
-
-### 7. Ebook Principles in Review Rubric Categories
-
-**File:** `references/review-rubric.md`
-
-Concise additions to existing categories (2-3 bullet points each, no verbose explanations):
-
-#### Typography Category — Add to Pass Criteria:
-- [ ] Line-height matches content type (body 1.4-1.6x, headings 1.1-1.2x)
-- [ ] Hierarchy uses weight changes, not just size changes
-
-#### Color Category — Add to Pass Criteria:
-- [ ] Roughly follows 60-30-10 distribution (dominant/secondary/accent)
-- [ ] Dark backgrounds use varied text opacity for hierarchy
-
-#### Color Category — Add to Common Violations:
-| All text same color on dark bg | Warning | Everything `text-white` with no hierarchy |
-
-#### Hierarchy Category — Add to Pass Criteria:
-- [ ] Page follows a narrative flow (Problem → Solution → Proof → CTA for marketing; Task → Content → Actions for dashboards)
-
----
-
-### 8. Ebook Principles in Presets
-
-Minor, concise additions. Each preset gets 2-4 lines max.
-
-**`linear-mercury.md`:**
-- Typography section: Add line-height spec — Body `leading-normal` (1.5x at 14px), headings `leading-tight` (1.1-1.2x)
-- Typography section: Add note — "Prefer weight changes over size changes for sub-heading hierarchy"
-
-**`stripe-vercel.md`:**
-- Typography section: Add line-height spec — Body `leading-relaxed` (1.6x at 16px), headings `leading-tight`
-- Color section: Add — "60-30-10 on dark: bg is 60%, text/icons 30%, gradient/accent 10%"
-- Color section: Add — "Vary text opacity on dark backgrounds for hierarchy (100%/70%/50%)"
-
-**`apple-notion.md`:**
-- Typography section: Heading line-height already implied by generous body spacing. Add explicit — Headings: `leading-tight` (1.2x)
-- Typography section: Add note — "Weight-based hierarchy is this preset's signature: regular → medium creates hierarchy without size change"
-
----
-
-### 9. Ecosystem Positioning in SKILL.md
-
-**File:** `SKILL.md`
-
-Add a brief section (6-8 lines max) after "Skill Precedence":
-
-```markdown
-## Ecosystem
-
-Complementary skills (not competitors):
-
-| Skill | Their Focus | Our Focus |
-|-------|------------|-----------|
-| `rams` | WCAG compliance | Aesthetic taste |
-| `baseline-ui` | Animation/typography minimums | Specific preset enforcement |
-| `web-interface-guidelines` | Interaction/performance | Visual identity |
-| `deslop` | Code style cleanup | Design style enforcement |
-```
-
-No verbose explanations — the table format is self-explanatory and token-efficient.
-
----
-
-## Post-Change Token Budget Audit
-
-Estimated line counts after all changes:
-
-| File | Before | After | Limit | Status |
-|---|---|---|---|---|
-| `SKILL.md` | 135 | ~150 | 500 lines | Safe |
-| `guard-checks.md` | 155 | ~200 | n/a (reference) | Add TOC |
-| `review-rubric.md` | 180 | ~240 | n/a (reference) | Add TOC |
-| `linear-mercury.md` | 163 | ~175 | n/a (reference) | Add TOC |
-| `stripe-vercel.md` | 146 | ~160 | n/a (reference) | Add TOC |
-| `apple-notion.md` | 164 | ~175 | n/a (reference) | Add TOC |
-| `design-review.md` | 93 | ~85 | n/a (command) | Restructured |
-| `design-brief.md` | 66 | 66 | n/a (command) | No change |
-
-None of these files are close to the 500-line soft limit. All reference files over 100 lines will have TOCs.
-
----
-
-## Implementation Order
-
-1. **TOCs first** — Add table of contents to all 5 reference files (guard-checks, review-rubric, 3 presets)
-2. **Restructure design-review.md** — Per-phase loading instead of all-at-once
-3. **guard-checks.md** — Add checks #7 (em dashes), #11 (line-height), #12 (dark bg hierarchy), update decision tree
-4. **review-rubric.md** — Add "When to Break the Rules" section, add ebook criteria to Typography/Color/Hierarchy
-5. **Presets** — Add line-height specs and ebook notes to all 3 presets
-6. **SKILL.md** — Add ecosystem positioning table
 
 ## Files Changed
 
-- `commands/design-review.md` (restructured for per-phase loading)
-- `references/guard-checks.md` (TOC + 3 new checks + decision tree update)
-- `references/review-rubric.md` (TOC + rule-breaking section + ebook criteria)
-- `presets/linear-mercury.md` (TOC + line-height + weight-hierarchy note)
-- `presets/stripe-vercel.md` (TOC + line-height + 60-30-10 + dark bg hierarchy)
-- `presets/apple-notion.md` (TOC + heading line-height + weight-hierarchy note)
-- `skills/design-quality/SKILL.md` (ecosystem positioning table)
+| File | Change |
+|------|--------|
+| `commands/design-direction.md` | **NEW** — Design direction command |
+| `skills/design-quality/SKILL.md` | Add direction to Related Skills + Proactive Recommendations |
+| `commands/design-brief.md` | Fix skill path, add direction reference |
+| `README.md` | Add direction command, update workflow diagrams |
+| `.claude-plugin/plugin.json` | Version 1.2.0 |
+| `test-project/CLAUDE.md` | Rebuilt for full flow |
+| `test-project/components/weather-dashboard-before.tsx` | **NEW** — Intentionally bad version |
+| `test-project/components/weather-dashboard.tsx` | Existing fixed version |
+| `test-project/REVIEW.md` | Full end-to-end documented run |
+
+## Implementation Order
+
+1. Create `design-direction.md` command
+2. Update `SKILL.md` (related skills + proactive recommendations)
+3. Update `design-brief.md` (path fix + direction reference)
+4. Update `README.md` (command table + workflow + usage)
+5. Bump `plugin.json` to v1.2.0
+6. Rebuild test project with full end-to-end flow
+7. Commit and push
