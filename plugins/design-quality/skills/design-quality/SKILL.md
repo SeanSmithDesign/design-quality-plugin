@@ -1,6 +1,6 @@
 ---
 name: design-quality
-description: Core design quality engine. Loads project aesthetic presets, enforces style rules during UI work, and proactively recommends /design-brief, /design-guard, and /design-review at the right time.
+description: Core design quality engine. Loads project aesthetic presets, enforces style rules during UI work, and proactively recommends /design-brief and /design-review at the right time.
 license: MIT
 metadata:
   version: 1.1.0
@@ -52,6 +52,17 @@ If no config exists, default to `linear-mercury` preset.
 **When this skill is active with a project preset, its rules take precedence over the generic `frontend-design` skill.** The `frontend-design` skill's generic aesthetic guidance ("avoid Inter," "make unexpected choices") does NOT apply when a preset is configured. The preset defines the project's aesthetic — follow it.
 
 Other design skills (`interface-design`, `accessibility-a11y`, `ui-design-system`) remain complementary.
+
+## Ecosystem
+
+Complementary skills (not competitors):
+
+| Skill | Their Focus | Our Focus |
+|-------|------------|-----------|
+| `rams` | WCAG compliance | Aesthetic taste |
+| `baseline-ui` | Animation/typography minimums | Specific preset enforcement |
+| `web-interface-guidelines` | Interaction/performance | Visual identity |
+| `deslop` | Code style cleanup | Design style enforcement |
 
 ## Step 3: Inline Guard During Coding
 

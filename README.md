@@ -227,7 +227,7 @@ You choose: fix all, fix errors only, or handle manually.
 
 ## Guard Checks
 
-The full guard checklist covers 15 items in three tiers:
+The full guard checklist covers 18 items in three tiers:
 
 ### Errors (must fix)
 1. No hardcoded colors (hex, rgb, platform color literals)
@@ -236,19 +236,22 @@ The full guard checklist covers 15 items in three tiers:
 4. Font family matches preset
 5. Touch targets >= 44pt
 6. Accessible names on icon-only buttons
+7. No em dashes in copy (AI writing hallmark)
 
 ### Warnings (should fix)
-7. Spacing aligns to 8pt grid
-8. Elevation hierarchy matches preset
-9. Typography weight consistency
-10. Transitions on interactive state changes
+8. Spacing aligns to 8pt grid
+9. Elevation hierarchy matches preset
+10. Typography weight consistency
+11. Transitions on interactive state changes
+12. Line-height ranges (body 1.4-1.6x, headings 1.1-1.2x)
+13. Dark background text hierarchy (vary opacity)
 
 ### Suggestions (nice to have)
-11. Visual hierarchy clarity
-12. Color accent restraint
-13. Hover/press state presence
-14. Empty/loading/error states
-15. Semantic markup usage
+14. Visual hierarchy clarity
+15. Color accent restraint
+16. Hover/press state presence
+17. Empty/loading/error states
+18. Semantic markup usage
 
 ## Philosophy
 

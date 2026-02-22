@@ -1,5 +1,15 @@
 # Preset: Linear / Mercury
 
+## Contents
+- [Philosophy](#philosophy)
+- [Typography](#typography)
+- [Color](#color)
+- [Spacing](#spacing)
+- [Elevation](#elevation)
+- [Motion](#motion)
+- [Component Patterns](#component-patterns)
+- [Do / Don't Examples](#do--dont-examples)
+
 ## Philosophy
 
 Clean, functional, minimal. Every element earns its place. Information density is high but never feels cluttered — achieved through precise spacing, restrained color, and typographic hierarchy rather than decoration. The interface disappears; the content speaks.
@@ -22,8 +32,10 @@ Study: How these apps use whitespace to create hierarchy without borders. How ty
   - H2: text-2xl font-semibold tracking-tight
   - H3: text-lg font-semibold
   - H4: text-base font-medium
-- **Body:** text-sm (14px), line-height 1.5 (leading-normal)
+- **Body:** text-sm (14px), `leading-normal` (1.5x)
+- **Headings:** `leading-tight` (1.1-1.2x) — tighter line-height as size increases
 - **Labels:** text-xs font-medium uppercase tracking-wide (max 0.05em)
+- **Hierarchy principle:** Prefer weight changes over size changes for sub-heading hierarchy. A weight shift (regular → medium) creates hierarchy without a size jump.
 - **Anti-patterns:**
   - No serif fonts for UI elements (buttons, labels, nav)
   - No tracking wider than 0.05em

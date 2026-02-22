@@ -1,5 +1,15 @@
 # Preset: Apple / Notion
 
+## Contents
+- [Philosophy](#philosophy)
+- [Typography](#typography)
+- [Color](#color)
+- [Spacing](#spacing)
+- [Elevation](#elevation)
+- [Motion](#motion)
+- [Component Patterns](#component-patterns)
+- [Do / Don't Examples](#do--dont-examples)
+
 ## Philosophy
 
 Refined simplicity. The interface feels inevitable — as if no other design was possible. Whitespace is the primary design element. Typography does the heavy lifting. Color is so restrained it's almost monochrome. When everything is quiet, the one thing with color demands attention.
@@ -22,8 +32,10 @@ Study: How these apps make complex information feel simple. How whitespace creat
   - H2: text-2xl font-semibold
   - H3: text-lg font-medium
   - H4: text-base font-medium
-- **Body:** text-base (16px), line-height 1.7 (leading-loose) — generous line-height is a signature
+- **Body:** text-base (16px), `leading-loose` (1.7x) — generous line-height is a signature
+- **Headings:** `leading-tight` (1.2x) — contrast with the loose body creates rhythm
 - **Captions:** text-sm text-muted-foreground, line-height 1.5
+- **Hierarchy principle:** Weight-based hierarchy is this preset's signature. A shift from regular → medium creates hierarchy without a size change. Size jumps are secondary.
 - **Anti-patterns:**
   - No display/novelty fonts — invisible typography only
   - No tight line-height (under 1.5 for body)
