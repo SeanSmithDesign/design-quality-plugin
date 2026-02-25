@@ -1,13 +1,13 @@
 {
   "name": "design-quality",
-  "version": "1.0.0",
-  "description": "Enforce project-specific aesthetic standards across the AI design workflow. Includes 3 commands, 1 skill, and 3 aesthetic presets.",
+  "version": "1.1.0",
+  "description": "Enforce project-specific aesthetic standards across the AI design workflow. Includes 2 commands, 1 skill, and 3 aesthetic presets.",
   "author": {
     "name": "Sean Smith",
-    "url": "https://github.com/DT-Funding-Solutions"
+    "url": "https://github.com/SeanSmithDesign"
   },
-  "homepage": "https://github.com/DT-Funding-Solutions/design-quality-plugin",
-  "repository": "https://github.com/DT-Funding-Solutions/design-quality-plugin",
+  "homepage": "https://github.com/SeanSmithDesign/design-quality-plugin",
+  "repository": "https://github.com/SeanSmithDesign/design-quality-plugin",
   "license": "MIT",
   "keywords": [
     "design-quality",

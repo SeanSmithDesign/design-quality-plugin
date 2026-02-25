@@ -290,7 +290,7 @@ For smaller tasks, the essentials:
 
 ### Without Compound Engineering
 
-This plugin works standalone. Use the three commands directly:
+This plugin works standalone. Use the two commands directly:
 
 ```
 /design-brief                          <- before coding
