@@ -11,9 +11,8 @@ Run a design quality review on UI components.
 ## Setup
 
 1. Read the project's `CLAUDE.md` for a `## Design Quality` section to find the active preset
-2. Load the `design-quality` skill from `.claude/skills/design/design-quality/SKILL.md`
-3. Load the active preset from `presets/<name>.md`
-4. Load the review rubric from `references/review-rubric.md`
+2. Load the active preset from `presets/<name>.md`
+3. Load the review rubric from `references/review-rubric.md`
 
 ## Target
 

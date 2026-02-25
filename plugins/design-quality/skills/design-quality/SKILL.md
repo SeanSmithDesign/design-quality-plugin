@@ -1,6 +1,6 @@
 ---
 name: design-quality
-description: Core design quality engine. Loads project aesthetic presets, enforces style rules during UI work, and proactively recommends /design-brief, /design-guard, and /design-review at the right time.
+description: Core design quality engine. Loads project aesthetic presets, enforces style rules during UI work, and proactively recommends /design-brief and /design-review at the right time.
 license: MIT
 metadata:
   version: 1.1.0
@@ -43,7 +43,7 @@ Read the project's `CLAUDE.md` for a `## Design Quality` section. Extract:
 - **Reference URLs** — Sites to study for aesthetic reference
 - **Project Overrides** — Any preset values to customize
 
-Load the preset from `~/.claude/skills/design/design-quality/presets/<name>.md`.
+Load the preset from `presets/<name>.md`.
 
 If no config exists, default to `linear-mercury` preset.
 
@@ -105,7 +105,7 @@ This is automatic — no user action needed. Use `/design-review` for the explic
 | `stripe-vercel` | Premium, polished, depth | Marketing sites, developer platforms, fintech |
 | `apple-notion` | Refined simplicity | Consumer apps, content tools, note-taking |
 
-Presets are at `~/.claude/skills/design/design-quality/presets/`.
+Presets are at `presets/`.
 
 ### Custom Presets
 
@@ -130,5 +130,3 @@ Overrides the project default until the session ends.
 | `/workflows:plan` | Recommend `/design-brief` for UI tasks |
 | `/workflows:work` | Inline guard active — self-check before writing UI code |
 | `/workflows:review` | Include design scoring when UI files in diff |
-| `design-iterator` agent | Use after review for iterative screenshot-based refinement |
-| `RAMS` | Complementary: RAMS = accessibility, this = holistic aesthetics |
