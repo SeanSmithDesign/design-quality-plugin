@@ -1,4 +1,16 @@
-# Preset: Apple / Notion
+# Preset: Refined Minimal
+
+## Contents
+- [Philosophy](#philosophy)
+- [Typography](#typography)
+- [Color](#color)
+- [Spacing](#spacing)
+- [Layout](#layout)
+- [Elevation](#elevation)
+- [Motion](#motion)
+- [Content](#content)
+- [Component Patterns](#component-patterns)
+- [Do / Don't Examples](#do--dont-examples)
 
 ## Philosophy
 
@@ -6,24 +18,29 @@ Refined simplicity. The interface feels inevitable — as if no other design was
 
 ## Reference Apps
 
+Study these for this aesthetic — the preset is named for the style, not the brands:
+
 - **Apple** — System-level typography, whitespace as luxury, product showcase composition
 - **Notion** — Friendly minimalism, content-first layout, subtle interactive states
 - **Things** — Perfect task hierarchy, weight-based visual organization, calming palette
 
-Study: How these apps make complex information feel simple. How whitespace creates premium perception. How a single weight change (regular → medium) creates clear hierarchy without size change.
+Study: How these apps make complex information feel simple. How whitespace creates premium perception. How a single weight change (regular to medium) creates clear hierarchy without size change.
 
 ## Typography
 
 - **Heading font:** System sans or SF-style — Inter, SF Pro, or system-ui. The font should be invisible — you notice the words, not the typeface.
 - **Body font:** Same family as headings. Consistency over variety.
 - **Display:** Moderate sizing, heavy weight contrast. A 48px bold heading next to 16px regular body creates hierarchy through weight, not scale.
+- **Typescale:** ~1.25 (Major Third) — subtle, understated rhythm. Size differences are gentle; weight does the heavy lifting.
 - **Heading hierarchy:**
   - H1: text-3xl font-bold tracking-tight
   - H2: text-2xl font-semibold
   - H3: text-lg font-medium
   - H4: text-base font-medium
-- **Body:** text-base (16px), line-height 1.7 (leading-loose) — generous line-height is a signature
+- **Body:** text-base (16px), `leading-loose` (1.7x) — generous line-height is a signature
+- **Headings:** `leading-tight` (1.2x) — contrast with the loose body creates rhythm
 - **Captions:** text-sm text-muted-foreground, line-height 1.5
+- **Hierarchy principle:** Weight-based hierarchy is this preset's signature. A shift from regular → medium creates hierarchy without a size change. Size jumps are secondary.
 - **Anti-patterns:**
   - No display/novelty fonts — invisible typography only
   - No tight line-height (under 1.5 for body)
@@ -60,6 +77,14 @@ Study: How these apps make complex information feel simple. How whitespace creat
   - No section spacing under `py-12`
   - No compact data tables — use generous row height (`h-14` minimum)
 
+## Layout
+
+- **Proportions:** Content areas use golden ratio proportions for optimal reading comfort. Main content containers at ~65ch width (the golden ratio of comfortable line length).
+- **Grid:** 12-column, `gap-6` gutters, `max-w-5xl` container (narrower for content focus)
+- **Responsive breakpoints:** `sm:640` / `md:768` / `lg:1024` / `xl:1280`
+- **Card layout:** 3-col max on `lg`, 2-col on `md`, 1-col on `sm`
+- **Content width:** `max-w-xl` to `max-w-2xl` for body text. Narrower is better.
+
 ## Elevation
 
 - **Philosophy:** Whitespace IS the elevation. Minimal shadows. Hairline borders for structure.
@@ -91,6 +116,14 @@ Study: How these apps make complex information feel simple. How whitespace creat
   - No scale effects on hover
   - No scroll-triggered animations (content is always visible)
   - No `duration` over 400ms
+
+## Content
+
+- **Copy density:** Minimal. Every word earns its place.
+- **Headlines:** Statements, not descriptions. Say what it is, not what it does.
+- **Body:** If a sentence doesn't serve the user, delete it. Aim for brevity that feels generous, not sparse.
+- **CTAs:** Understated. "Continue", "Save", "Done". No urgency, no pressure.
+- **Tone:** Calm, friendly, human. Write like a thoughtful friend, not a brand.
 
 ## Component Patterns
 

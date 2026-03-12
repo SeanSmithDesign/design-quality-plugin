@@ -11,9 +11,7 @@ Run a design quality review on UI components.
 ## Setup
 
 1. Read the project's `CLAUDE.md` for a `## Design Quality` section to find the active preset
-2. Load the `design-quality` skill from `.claude/skills/design/design-quality/SKILL.md`
-3. Load the active preset from `presets/<name>.md`
-4. Load the review rubric from `references/review-rubric.md`
+2. Load the active preset from `presets/<name>.md`
 
 ## Target
 
@@ -33,19 +31,19 @@ For each file in scope:
 
 ### Phase 1: Guard (catch violations)
 
-Run through the guard checklist from `references/guard-checks.md`:
+Load `references/guard-checks.md` and run through the checklist:
 
-- **Errors** — Hardcoded colors, wrong fonts, missing accessible names
-- **Warnings** — Off-grid spacing, missing transitions, inconsistent elevation
-- **Suggestions** — Missing hover states, empty/loading states, semantic HTML
+- **Errors** — Hardcoded colors, wrong fonts, missing accessible names, em dashes in copy
+- **Warnings** — Off-grid spacing, missing transitions, inconsistent elevation, line-height mismatches, flat dark-bg text hierarchy
+- **Suggestions** — Missing hover states, empty/loading states, semantic HTML, choice overload (Hick's Law), non-responsive headings, AI-default copy patterns, layout proportion balance
 
 ### Phase 2: Score (rate quality)
 
-Score against the 6 categories from the review rubric:
+Load `references/review-rubric.md` and score against the 6 categories:
 
-- **Hierarchy** — Visual weight, semantic HTML, heading order
-- **Typography** — Font compliance, weight consistency, tracking
-- **Color** — Semantic tokens, contrast ratios, dark mode
+- **Hierarchy** — Visual weight, semantic HTML, heading order, narrative flow, copy quality, layout proportions
+- **Typography** — Font compliance, weight consistency, tracking, line-height ranges
+- **Color** — Semantic tokens, contrast ratios, dark mode, 60-30-10 distribution
 - **Spacing** — Grid adherence, consistent padding, touch targets
 - **Accessibility** — ARIA labels, focus indicators, reduced-motion
 - **Polish** — Elevation, hover states, transitions, loading/error states

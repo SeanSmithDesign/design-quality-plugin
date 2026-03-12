@@ -2,6 +2,17 @@
 
 Scoring criteria for Design Quality Review mode. Each category is scored Pass / Needs Work / Fail.
 
+## Contents
+- [Scoring Scale](#scoring-scale)
+- [Category 1: Hierarchy](#category-1-hierarchy-17-pts)
+- [Category 2: Typography](#category-2-typography-17-pts)
+- [Category 3: Color](#category-3-color-17-pts)
+- [Category 4: Spacing](#category-4-spacing-16-pts)
+- [Category 5: Accessibility](#category-5-accessibility-16-pts)
+- [Category 6: Polish](#category-6-polish-17-pts)
+- [Score Examples](#score-examples)
+- [When to Break the Rules](#when-to-break-the-rules)
+
 ## Scoring Scale
 
 | Rating | Points | Meaning |
@@ -24,6 +35,10 @@ Does the interface guide the eye? Can you identify the most important element in
 - [ ] Semantic HTML used (`h1`-`h6`, `main`, `nav`, `section`, `article`)
 - [ ] Visual weight matches content importance
 - [ ] No two elements compete for primary attention
+- [ ] Primary CTA is the largest interactive target in its section (Fitts' Law — larger targets are faster to reach)
+- [ ] Page follows a narrative flow (marketing: Problem → Solution → Proof → CTA; dashboards: Task → Content → Actions)
+- [ ] Layout proportions are intentional (golden ratio or deliberate deviation)
+- [ ] Copy follows appropriate length conventions (headlines 6-12 words, CTAs 2-5 words, body scannable)
 
 ### Common Violations
 | Violation | Severity | Example |
@@ -31,7 +46,11 @@ Does the interface guide the eye? Can you identify the most important element in
 | Multiple elements same visual weight | Warning | Two `text-2xl font-bold` headings side-by-side |
 | Heading levels skipped | Warning | H1 followed directly by H4 |
 | No clear CTA | Error | Page section with no primary action |
+| CTA not dominant target | Warning | Secondary button is same size as primary CTA (Fitts' Law) |
+| Too many ungrouped choices | Suggestion | 8 nav items with identical styling (Hick's Law) |
 | Non-semantic HTML | Warning | `<div>` used instead of `<section>` or `<nav>` |
+| Generic AI copy patterns | Suggestion | "Unlock the power of..." headline with no specificity |
+| Arbitrary layout proportions | Suggestion | 50:50 hero split where content is asymmetric |
 
 ---
 
@@ -43,9 +62,10 @@ Does text usage comply with the active preset?
 - [ ] Font family matches preset spec
 - [ ] Weight hierarchy used correctly (bold → semibold → medium → regular)
 - [ ] Tracking matches preset spec (tight for headings, normal for body)
-- [ ] Line-height appropriate (1.5+ for body, tighter for headings)
+- [ ] Line-height matches content type (body 1.4-1.6x, headings 1.1-1.2x)
 - [ ] Maximum 3 font weights visible per screen
 - [ ] No unauthorized font imports
+- [ ] Hierarchy uses weight changes, not just size changes
 
 ### Common Violations
 | Violation | Severity | Example |
@@ -69,6 +89,8 @@ Are colors used according to preset philosophy?
 - [ ] Accent color usage within preset limits
 - [ ] Text contrast ratios meet WCAG AA (4.5:1 normal, 3:1 large)
 - [ ] Dark mode support via CSS variables (no `dark:` overrides needed)
+- [ ] Roughly follows 60-30-10 distribution (dominant/secondary/accent)
+- [ ] Dark backgrounds use varied text opacity for hierarchy
 
 ### Common Violations
 | Violation | Severity | Example |
@@ -79,6 +101,7 @@ Are colors used according to preset philosophy?
 | Low contrast text | Error | `text-muted-foreground` on `bg-muted` (check ratio) |
 | Accent overuse | Warning | 5+ copper-colored elements on screen |
 | Missing status color semantic | Warning | Using `text-red-500` instead of `text-destructive` |
+| Flat text hierarchy on dark bg | Warning | All text `text-white` with no opacity variation |
 
 ---
 
@@ -140,6 +163,7 @@ Does the interface feel finished?
 - [ ] Empty states for data-dependent components
 - [ ] Error states for forms and data fetching
 - [ ] Consistent border-radius across same-level elements
+- [ ] Multi-step flows have progress indicators (Zeigarnik Effect — users stay engaged with visible progress)
 
 ### Common Violations
 | Violation | Severity | Example |
@@ -150,6 +174,7 @@ Does the interface feel finished?
 | Missing loading state | Warning | Button submits with no loading indicator |
 | Missing empty state | Suggestion | "No data" shown as blank area |
 | Missing error state | Warning | Form submission fails silently |
+| Missing progress indicator | Suggestion | 4-step checkout with no visual progress (Zeigarnik Effect) |
 
 ---
 
@@ -178,3 +203,29 @@ Does the interface feel finished?
 - Inconsistent spacing, cramped in places
 - Missing aria labels, small touch targets
 - No hover states, no transitions, no loading/error states
+
+---
+
+## When to Break the Rules
+
+Rigid rule-following produces generic design. Good design knows when to deviate.
+
+### Typography
+- Display type can break weight/size limits for hero compositions
+- One serif accent phrase in a sans-serif system adds personality (ebook + clean-functional preset endorse this)
+- Exceeding 3 font weights is acceptable in rich typographic layouts (pricing pages, dashboards)
+
+### Color
+- Third-party brand colors (Google blue, GitHub black) are exempt from hardcoded-color errors — flag but don't fail
+- 60-30-10 is a guideline. A dark hero at 90/10/0 is fine if hierarchy works
+- Saturated accent on a CTA banner is intentional emphasis, not a violation
+
+### Spacing
+- Optical alignment (`-1px` nudge) beats grid alignment when visual alignment is off
+- Breaking grid for dramatic effect (hero `py-40` in a `py-32` system) is valid if the visual weight demands it
+
+### General
+- Breaking one rule to strengthen another is a net positive — weigh the tradeoff
+- Marketing pages and dashboards have different standards — context matters
+
+**Scoring impact:** Intentional rule-breaks that serve the design should be noted as "Intentional deviation — [reason]" rather than penalized.

@@ -1,10 +1,24 @@
-# Preset: Stripe / Vercel
+# Preset: Premium Depth
+
+## Contents
+- [Philosophy](#philosophy)
+- [Typography](#typography)
+- [Color](#color)
+- [Spacing](#spacing)
+- [Layout](#layout)
+- [Elevation](#elevation)
+- [Motion](#motion)
+- [Content](#content)
+- [Component Patterns](#component-patterns)
+- [Do / Don't Examples](#do--dont-examples)
 
 ## Philosophy
 
 Premium, polished, depth. This aesthetic communicates trust through craft. Rich visual layers, confident dark backgrounds, and generous typography create a sense of quality. The interface feels expensive — not through ornamentation, but through precision and depth.
 
 ## Reference Apps
+
+Study these for this aesthetic — the preset is named for the style, not the brands:
 
 - **Stripe** — Gradient usage, card depth, documentation layout, pricing page composition
 - **Vercel** — Typography confidence, dark theme execution, whitespace as a luxury element
@@ -17,12 +31,14 @@ Study: How these apps use layered depth (shadows + gradients + borders) together
 - **Heading font:** A distinctive display font — GT Walsheim, Satoshi, or Geist. NOT Inter or system fonts. The heading font is a brand signature.
 - **Body font:** Clean sans-serif — Geist, Inter, or system-ui. Prioritize legibility.
 - **Display:** Large and confident. Hero text can be 64-80px. Let it breathe.
+- **Typescale:** ~1.333 (Perfect Fourth) — confident, generous spacing between levels. Each step is ~1.333x the next.
 - **Heading hierarchy:**
   - H1: text-5xl or text-6xl, font-bold, tracking-tight
   - H2: text-3xl font-semibold tracking-tight
   - H3: text-xl font-semibold
   - H4: text-base font-medium
-- **Body:** text-base (16px), line-height 1.6 (leading-relaxed)
+- **Body:** text-base (16px), `leading-relaxed` (1.6x)
+- **Headings:** `leading-tight` (1.1-1.2x) — tighter line-height as size increases
 - **Code/mono:** Monospace accents for technical content — `font-mono text-sm`
 - **Anti-patterns:**
   - No small hero text (under 48px)
@@ -36,6 +52,8 @@ Study: How these apps use layered depth (shadows + gradients + borders) together
 - **Accent:** Bold, saturated. Electric blue, vivid purple, warm orange — one signature color.
 - **Gradients:** Linear gradients on hero sections, card backgrounds, or CTAs. Keep to 2-3 stops.
 - **Status colors:** Saturated and clear. Green for success, red for error, amber for warning.
+- **60-30-10 on dark:** Background is the 60%, text/icons 30%, gradient/accent 10%.
+- **Dark bg hierarchy:** Vary text opacity for hierarchy — primary at 100%, secondary at 70%, tertiary at 50%. Never uniform `text-white` everywhere.
 - **Anti-patterns:**
   - No washed-out pastels — colors should have conviction
   - No more than 2 gradient directions on a page
@@ -45,7 +63,7 @@ Study: How these apps use layered depth (shadows + gradients + borders) together
 
 - **Grid:** 8px base, but generous. This aesthetic breathes.
 - **Component padding:**
-  - Cards: `p-8` (32px) or `p-10` (40px) — more generous than linear-mercury
+  - Cards: `p-8` (32px) or `p-10` (40px), more generous than clean-functional
   - Buttons: `px-6 py-3` (24px / 12px)
   - Hero section: `py-24` to `py-32` (96-128px)
 - **Section spacing:**
@@ -56,6 +74,14 @@ Study: How these apps use layered depth (shadows + gradients + borders) together
 - **Anti-patterns:**
   - No cramped layouts — if it feels tight, add space
   - No section spacing under `py-16`
+
+## Layout
+
+- **Proportions:** Hero sections use ~62:38 golden ratio split for text:visual composition. For impactful hero typography, the golden ratio typescale (~1.618) can replace the default 1.333.
+- **Grid:** 12-column, `gap-6` to `gap-8` gutters, `max-w-7xl` container
+- **Responsive breakpoints:** `sm:640` / `md:768` / `lg:1024` / `xl:1280`
+- **Card layout:** 3-col on `lg`, 2-col on `md`, 1-col on `sm`
+- **Content width:** Hero text at `max-w-2xl`, body at `max-w-3xl`
 
 ## Elevation
 
@@ -85,6 +111,15 @@ Study: How these apps use layered depth (shadows + gradients + borders) together
   - No janky animations (use `will-change: transform` on animated elements)
   - No motion on every scroll — pick 3-5 key moments per page
   - No animation `duration` over 800ms — it starts feeling slow
+
+## Content
+
+- **Copy density:** Low to moderate. Marketing pages are scannable, not walls of text.
+- **Headlines:** 6-12 words, front-load the value. Lead with what the user gets, not what the product does.
+- **Subheadlines:** 15-25 words. Expand on the headline with specifics.
+- **Body:** Short paragraphs (2-4 sentences). Every paragraph earns its space.
+- **CTAs:** 2-5 words, verb-first. "Start building", "Deploy now", "See pricing". Never "Click here" or "Learn more".
+- **Tone:** Confident, precise, authoritative. Write like the product speaks for itself.
 
 ## Component Patterns
 
