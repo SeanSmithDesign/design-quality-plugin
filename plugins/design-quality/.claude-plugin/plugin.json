@@ -1,6 +1,6 @@
 {
   "name": "design-quality",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Enforce project-specific aesthetic standards across the AI design workflow. Includes 3 commands, 1 skill, and 3 aesthetic presets.",
   "author": {
     "name": "Sean Smith",
