@@ -90,7 +90,7 @@ Claims without evidence are treated as false. Attach all of the following:
 
 - Screenshots of every screen and key state, at a consistent viewport
 - A short video/screen-recording walking the full flow
-- A live build link: Vercel preview URL (web) or TestFlight build (iOS), when the project has one. Preview deploys are fine; prod deploys need Sean's per-deploy authorization.
+- A live build link: Vercel preview URL (web) or TestFlight build (iOS), when the project has one. Preview deploys are fine; prod deploys need explicit human authorization.
 - A DESIGN.md token-conformance note: verify fonts/spacing/colors against the project's DESIGN.md and report conformance or name the deviations explicitly.
 
 ### Gate Verdict
