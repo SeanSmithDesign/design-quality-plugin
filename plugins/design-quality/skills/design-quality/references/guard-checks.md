@@ -1,4 +1,4 @@
-# Guard Checks (22)
+# Guard Checks (24)
 
 Quick-reference checklist for Guard mode. Before writing any UI code, self-check against these rules. Ordered by detection ease (static/obvious first, judgment calls last).
 
@@ -6,8 +6,8 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 
 ## Contents
 - [Static Checks](#static-checks) — #1-7
-- [Pattern Checks](#pattern-checks) — #8-13
-- [Judgment Checks](#judgment-checks) — #14-22
+- [Pattern Checks](#pattern-checks) — #8-14
+- [Judgment Checks](#judgment-checks) — #15-24
 - [Quick Decision Tree](#quick-decision-tree)
 
 ---
@@ -95,7 +95,16 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 ```
 **Note:** `p-3` (12px) is acceptable for fine adjustments on the 4px sub-grid.
 
-### 9. Elevation Hierarchy
+### 9. Breathing Room (Asymmetric Cramping)
+**Severity:** Warning
+**Look for:** Containers with padding on some sides but zero on others (e.g., `px-4 py-0`), or content jammed flush against a container edge while the other sides have padding. Check media inside cards first — device mockups, images, and embeds are the most common offender.
+**Fix:** Pad all sides on the base-8/16pt grid. A container must breathe on every side, not just the sides someone remembered.
+```tsx
+// Bad:  <div className="px-6 py-0"><img ... /></div>
+// Good: <div className="p-6"><img ... /></div>
+```
+
+### 10. Elevation Hierarchy
 **Severity:** Warning
 **Look for:** Shadow usage that doesn't match preset levels. Mixing borders and shadows on cards.
 **Fix:** Follow preset's elevation system
@@ -104,7 +113,7 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 // Good (clean-functional): shadow-xs hover:shadow-sm
 ```
 
-### 10. Typography Weight Consistency
+### 11. Typography Weight Consistency
 **Severity:** Warning
 **Look for:** More than 3 font weights in a single component. Headings with inconsistent weight.
 **Fix:** Stick to the preset's weight hierarchy
@@ -113,7 +122,7 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 // Good: h2 always font-semibold, body always font-normal
 ```
 
-### 11. Transition on Interactive States
+### 12. Transition on Interactive States
 **Severity:** Warning
 **Look for:** Hover/focus states that change without `transition-*`
 **Fix:** Add appropriate transition class
@@ -122,7 +131,7 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 // Good: hover:shadow-md transition-shadow duration-150
 ```
 
-### 12. Line-Height Ranges
+### 13. Line-Height Ranges
 **Severity:** Warning
 **Look for:** Body text with `leading-tight`/`leading-none`. Headings (32px+) with `leading-loose`/`leading-relaxed`.
 **Fix:** Body: `leading-normal` to `leading-relaxed` (1.4-1.6x). Headings: `leading-tight` to `leading-snug` (1.1-1.2x).
@@ -133,7 +142,7 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 // Good: <h1 className="text-4xl leading-tight">Heading</h1>
 ```
 
-### 13. Dark Background Text Hierarchy
+### 14. Dark Background Text Hierarchy
 **Severity:** Warning
 **Look for:** On dark backgrounds (`bg-gray-900`, `bg-black`, `bg-background` in dark mode), all text using identical foreground color/opacity
 **Fix:** Vary opacity for hierarchy — primary at 100%, secondary at 70%, tertiary at 50%
@@ -146,38 +155,38 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 
 ## Judgment Checks
 
-### 14. Visual Hierarchy Clarity
+### 15. Visual Hierarchy Clarity
 **Severity:** Warning
 **Look for:** Multiple elements competing for attention at the same visual level
 **Fix:** Differentiate via size, weight, or color. One clear focal point per section.
 
-### 15. Color Accent Restraint
+### 16. Color Accent Restraint
 **Severity:** Suggestion
 **Look for:** More accent-colored elements than the preset recommends (e.g., >2 copper elements for clean-functional)
 **Fix:** Reduce accent usage. Use neutral colors for secondary elements.
 
-### 16. Hover State Presence
+### 17. Hover State Presence
 **Severity:** Suggestion
 **Look for:** Interactive elements (cards, buttons, links) without visible hover feedback
 **Fix:** Add hover state (background shift, shadow lift, or color change)
 
-### 17. Empty/Loading/Error States
+### 18. Empty/Loading/Error States
 **Severity:** Suggestion
 **Look for:** Components that display data without handling no-data, loading, or error conditions
 **Fix:** Add appropriate states (skeleton, spinner, empty message, error message)
 
-### 18. Semantic HTML
+### 19. Semantic HTML
 **Severity:** Suggestion
 **Look for:** `<div>` used where semantic elements would be more appropriate
 **Fix:** Use `<section>`, `<nav>`, `<main>`, `<article>`, `<header>`, `<footer>` as appropriate
 
-### 19. Choice Overload (Hick's Law)
+### 20. Choice Overload (Hick's Law)
 **Severity:** Suggestion
 **Look for:** More than 7 ungrouped equal-weight options (buttons, cards, nav items, list choices) in a single section with identical visual treatment
 **Why:** Hick's Law — more choices = longer decision time. Ungrouped options create cognitive overload.
 **Fix:** Group into categories with visual separators, use hierarchy to differentiate primary from secondary options, or paginate
 
-### 20. Responsive Heading Sizes
+### 21. Responsive Heading Sizes
 **Severity:** Suggestion
 **Look for:** Large headings (`text-3xl` or above) with no responsive variants (no `sm:text-*`, `md:text-*`, or `lg:text-*`)
 **Fix:** Add responsive sizing so headings scale down on mobile
@@ -186,7 +195,7 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 // Good: <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">Hero</h1>
 ```
 
-### 21. AI-Default Copy Patterns
+### 22. AI-Default Copy Patterns
 **Severity:** Suggestion
 **Look for:** Generic marketing copy that signals AI-generated content with no human editing:
 - Phrases: "Unlock the power of...", "Revolutionize your...", "Seamlessly integrate...", "Leverage the potential..."
@@ -197,7 +206,7 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 **Why:** This is the anti-vibe coding check for content. Generic copy is the text equivalent of generic UI.
 **Fix:** Rewrite with specifics. "Unlock the power of collaboration" becomes "Ship 2x faster with shared workspaces."
 
-### 22. Layout Proportion Balance
+### 23. Layout Proportion Balance
 **Severity:** Suggestion
 **Look for:** Layout proportions that feel arbitrary or unintentional:
 - Hero sections with no clear text:visual ratio (50:50 split when content is asymmetric)
@@ -206,6 +215,12 @@ Quick-reference checklist for Guard mode. Before writing any UI code, self-check
 - Card grids with inconsistent aspect ratios
 **Why:** Golden ratio (~1.618) and intentional proportions create visual harmony. Equal splits feel static.
 **Fix:** Apply golden ratio where appropriate: sidebar:content at ~38:62, hero text:visual at ~62:38. Set `max-w-prose` or `max-w-2xl` on text-heavy content.
+
+### 24. Image Cropping
+**Severity:** Warning
+**Look for:** Miscropped images — subjects cut at awkward points (joints, faces), cropped device mockups losing key screen content, or aspect-ratio mismatches that stretch/squash the image
+**Why:** Miscropped media is one of the fastest tells that a layout wasn't actually reviewed. Check media inside cards before anything else in the layout.
+**Fix:** Recrop to preserve the subject/key content, use `object-fit`/`object-position` intentionally, or change the container's aspect ratio to fit the image instead of forcing the image to fit the container
 
 ---
 
@@ -221,6 +236,9 @@ Writing a component?
 ├─ Uses Tailwind palette color? → ERROR. Use semantic token.
 ├─ Contains em dash in copy? → WARNING. Rewrite without dash.
 ├─ Spacing off 8px grid? → WARNING. Snap to grid.
+├─ Padding present on some sides, zero on others? → WARNING. Pad all sides (breathing room).
+├─ Content flush against a container edge? → WARNING. Add matching padding.
+├─ Image/mockup miscropped? → WARNING. Recrop or fix object-fit/aspect ratio.
 ├─ Body leading-tight or heading leading-loose? → WARNING. Fix line-height.
 ├─ Dark bg with uniform text color? → WARNING. Vary opacity.
 ├─ No transition on hover? → WARNING. Add transition.

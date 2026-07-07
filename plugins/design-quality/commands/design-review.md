@@ -1,12 +1,21 @@
 ---
 name: design-review
-description: "Guard + score + fix UI quality against the active design preset. Catches violations, scores 6 categories, and offers to auto-fix."
-argument-hint: "[file path, component name, or 'all' for full project]"
+description: "Guard + score + fix UI quality against the active design preset. Catches violations, scores 6 categories, and offers to auto-fix. Also runs whole-deliverable gate mode (cross-screen consistency + evidence bundle) before anything is reported done."
+argument-hint: "[file path, component name, 'all' for full project, or 'gate'/'--ship' for whole-deliverable review]"
 ---
 
 # Design Quality Review
 
 Run a design quality review on UI components.
+
+## Mode Detection
+
+This command has two modes. Default to **Per-Surface mode** unless one of these triggers **Gate mode**:
+
+- Explicit target/flag: `/design-review gate` or `/design-review --ship`
+- Natural language asking whether UI work is complete: "is the UI done", "ready to ship this screen", "ready for review"
+
+Gate mode runs the full Per-Surface review (Setup → Guard → Score → Fix) across every screen/state in scope, then adds the whole-deliverable checks in **Gate Mode Additions** below. Per-Surface mode is unchanged from today — single file, single component, or `all`.
 
 ## Setup
 
@@ -62,6 +71,44 @@ Use **AskUserQuestion** to confirm before applying fixes:
 - "Don't fix — I'll handle it"
 
 After fixing, re-score and show the before/after comparison.
+
+## Gate Mode Additions (whole-deliverable review only)
+
+Gate mode never certifies "done." Treat the deliverable as broken until proven otherwise — hunt for what's wrong, don't confirm what's right (Sean's rule: if an agent says done there's a 98% chance it isn't). On top of the Per-Surface review above, run:
+
+### Cross-Screen Consistency
+
+- Screenshot every screen/state in the flow at an identical viewport size.
+- Flip-test: page rapidly through the screenshots, watching shared chrome (headers, nav, tab bars, page margins) for drift.
+- If anything seems to drift, opacity-overlay two screenshots and diff to confirm.
+- Mobile: status bars must be staged/consistent (Apple's 9:41 convention) — never random real times across a sequence.
+- Elements may not drift position between screens in a sequence. Consistency across the flow matters more than any single screen being pretty.
+
+### Evidence Bundle
+
+Claims without evidence are treated as false. Attach all of the following:
+
+- Screenshots of every screen and key state, at a consistent viewport
+- A short video/screen-recording walking the full flow
+- A live build link: Vercel preview URL (web) or TestFlight build (iOS), when the project has one. Preview deploys are fine; prod deploys need Sean's per-deploy authorization.
+- A DESIGN.md token-conformance note: verify fonts/spacing/colors against the project's DESIGN.md and report conformance or name the deviations explicitly.
+
+### Gate Verdict
+
+End the gate report with a gate-results table, then the verdict line:
+
+```markdown
+| Gate                          | Result | Evidence pointer                  |
+|--------------------------------|--------|------------------------------------|
+| 1. Per-surface review          | pass   | score, path/link                  |
+| 2. Cross-screen consistency    | pass   | flip-test + overlay diff, path/link|
+| 3. Evidence bundle complete    | pass   | screenshots, video, build link, DESIGN.md conformance note |
+```
+
+Then one line, verbatim:
+
+`Ready for Sean's eye` — or —
+`NOT ready — <failed gate(s), named>`
 
 ## Output
 
