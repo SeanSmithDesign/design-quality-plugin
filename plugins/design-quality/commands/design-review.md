@@ -74,7 +74,7 @@ After fixing, re-score and show the before/after comparison.
 
 ## Gate Mode Additions (whole-deliverable review only)
 
-Gate mode never certifies "done." Treat the deliverable as broken until proven otherwise — hunt for what's wrong, don't confirm what's right (Sean's rule: if an agent says done there's a 98% chance it isn't). On top of the Per-Surface review above, run:
+Gate mode never certifies "done." Treat the deliverable as broken until proven otherwise — hunt for what's wrong, don't confirm what's right (Sean's rule: if an agent says done there's a 98% chance it isn't). Load `references/design-eye.md` as the taste lens for this pass. On top of the Per-Surface review above, run:
 
 ### Cross-Screen Consistency
 
